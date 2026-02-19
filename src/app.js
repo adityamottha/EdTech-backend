@@ -14,6 +14,12 @@ app.use(cors(
 app.use(express.json({limit:"16kb"}));
 app.use(express.static("public/temp"));
 app.use(express.urlencoded({limit:"16kb",extended:true}));
-app.use(cookieParser())
+app.use(cookieParser());
+
+
+// ERROR MIDDLEWARE--------------------------------
+import { errorMiddleware } from "./middlewares/error.middleware.js";
+app.use(errorMiddleware);
+
 
 export { app }
