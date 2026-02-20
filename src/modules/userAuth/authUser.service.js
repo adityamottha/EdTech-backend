@@ -1,7 +1,7 @@
 import { AuthUser } from "./models/authUser.model.js";
 import { ApiError } from "../../utils/ApiError.js";
 
-const registerUserController = async () =>{
+const registerUserService = async () =>{
     // check is user details are not empty
     // user user is not already in db
     // create user
@@ -10,4 +10,4 @@ const registerUserController = async () =>{
     // return user
 }
 
-export {registerUserController}
+export {registerUserService}
