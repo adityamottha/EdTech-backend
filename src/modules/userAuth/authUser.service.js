@@ -34,7 +34,7 @@ const registerUserService = async ({email,phoneNumber,password,role}) =>{
 const loginUserService = async({identifier,password})=>{
 
     // check each fields are required
-    if(!identifier?.trim){
+    if(!identifier?.trim()){
         throw new ApiError(400,"Email and PhoneNumber is required!");
     };
     if(!password?.trim()){
@@ -48,7 +48,7 @@ const loginUserService = async({identifier,password})=>{
     const query = isEmail ? {email:identifier.toLowerCase()} : {phoneNumber:identifier}
 
     // find user by email and phoneNumber
-    const user = AuthUser.findOne(query).select("+password");
+    const user = await AuthUser.findOne(query).select("+password");
 
     if(!user) throw new ApiError(409,"User is not registered!");
 
