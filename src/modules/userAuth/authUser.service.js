@@ -31,9 +31,9 @@ const registerUserService = async ({email,phoneNumber,password,role}) =>{
 }
 
 // LOGIN-SERVICE-----------------------------
-const loginUserService = async({email,phoneNumber,password})=>{
+const loginUserService = async({identifier,password})=>{
     // check each fields are required
-    if(!email.trim() || !phoneNumber.trim()){
+    if(!identifier?.trim){
         throw new ApiError(400,"Email and PhoneNumber is required!");
     };
 

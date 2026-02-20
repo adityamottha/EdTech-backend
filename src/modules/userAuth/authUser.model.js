@@ -8,14 +8,16 @@ const authUserSchema = new mongoose.Schema({
         required:true,
         trim:true,
         unique:true,
-        lowercase:true
+        lowercase:true,
+        sparse:true
     },
 
     phoneNumber :{
         type:String,
         trim:true,
         required:true,
-        unique:true
+        unique:true,
+        sparse:true
     },
 
     password:{
