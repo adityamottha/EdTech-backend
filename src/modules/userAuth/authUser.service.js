@@ -1,4 +1,4 @@
-import { AuthUser } from "./models/authUser.model.js";
+import { AuthUser } from "./authUser.model.js";
 import { ApiError } from "../../utils/ApiError.js";
 
 const registerUserService = async ({email,phoneNumber,password,role}) =>{
@@ -29,4 +29,4 @@ const registerUserService = async ({email,phoneNumber,password,role}) =>{
     return user;
 }
 
-export {registerUserService}
+export { registerUserService }

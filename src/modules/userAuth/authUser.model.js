@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
-import bcrypt from "bcrypt"
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+
 const authUserSchema = new mongoose.Schema({
     email:{
         type:String,
@@ -43,12 +45,36 @@ const authUserSchema = new mongoose.Schema({
         select:false
     },
 
-    loginAt:{
-        type:Date,
+    // PROFILE REFERENCE 
+
+     studentProfileId: {
+      type: Schema.Types.ObjectId,
+      ref: "StudentProfile",
     },
 
-    logoutAt:{
-        type:Date
+    teacherProfileId: {
+      type: Schema.Types.ObjectId,
+      ref: "TeacherProfile",
+    },
+
+    adminProfileId:{
+        type: Schema.Types.ObjectId,
+        ref: "AdminProfile"
+    },
+
+    //    SECURITY & SESSION CONTROL
+
+    lastLoginAt: {
+      type: Date,
+    },
+
+    lastLogoutAt: {
+      type: Date,
+    },
+
+    loginCount:{
+        type:Number,
+        default:0
     },
 
     loginAttempts:{
@@ -60,12 +86,39 @@ const authUserSchema = new mongoose.Schema({
         type:Date
     },
 
+    refreshTokenVersion: {
+    type: Number,
+    default: 0
+    },
+
     // role reference
     role: {
         type:String,
         enum:["Student","Teacher","Admin"],
         required:true,
-    }
+    },
+
+     createdBy: {
+      type: String,
+      enum: ["SELF", "ADMIN"],
+      default: "SELF",
+    },
+    
+    //    SOFT DELETE
+   
+    isDeleted: {
+      type: Boolean,
+      default: false,
+    },
+
+    deletedAt: {
+      type: Date,
+    },
+
+    deletedBy: {
+      type: Schema.Types.ObjectId,
+      ref: "AuthUser",
+    },
 
 
 },{timestamps:true});
@@ -100,4 +153,31 @@ authUserSchema.set("toJSON",{
         return ret
     }
 });
+
+authUserSchema.methods.generateAccessToken = function(){
+    return jwt.sign(
+        {
+            _id:this._id,
+            role:this.role
+       },
+       process.env.ACCESS_TOKEN_SECRET,
+       {
+        expiresIn:process.env.ACCESS_TOKEN_EXPIRY
+       }
+)
+}
+
+authUserSchema.methods.generateRefreshToken = function(){
+    return jwt.sign(
+        {
+            _id:this._id
+        },
+        process.env.REFRESH_TOKEN_SECRET,
+        {
+            expiresIn:process.env.REFRESH_TOKEN_EXPIRY
+        }
+    )
+}
+
+
 export const AuthUser = mongoose.model("AuthUser",authUserSchema)
