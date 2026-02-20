@@ -43,8 +43,12 @@ const authUserSchema = new mongoose.Schema({
         select:false
     },
 
-    lastLogin:{
+    loginAt:{
         type:Date,
+    },
+
+    logoutAt:{
+        type:Date
     },
 
     loginAttempts:{
