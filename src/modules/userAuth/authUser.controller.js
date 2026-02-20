@@ -19,4 +19,13 @@ const registerUserController = AsyncHandler(async (req,res)=>{
     )
 });
 
-export { registerUserController }
+const loginUserController = AsyncHandler(async (req,res)=>{
+    // get data from req.body
+    // call service function
+    // set cookies
+    //send response
+})
+export { 
+    registerUserController,
+    loginUserController
+ };

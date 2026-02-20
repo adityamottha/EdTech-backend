@@ -1,5 +1,6 @@
 import { AuthUser } from "./authUser.model.js";
 import { ApiError } from "../../utils/ApiError.js";
+import { generateAccessAndRefreshTokens } from "../../utils/AcceReffTokens.js";
 
 const registerUserService = async ({email,phoneNumber,password,role}) =>{
 
@@ -29,4 +30,39 @@ const registerUserService = async ({email,phoneNumber,password,role}) =>{
     return user;
 }
 
-export { registerUserService }
+// LOGIN-SERVICE-----------------------------
+const loginUserService = async({email,phoneNumber,password})=>{
+    // check each fields are required
+    if(!email.trim() || !phoneNumber.trim()){
+        throw new ApiError(400,"Email and PhoneNumber is required!");
+    };
+
+    // find user by email and phoneNumber
+    const user = AuthUser.findOne({
+        $or:{email,phoneNumber}
+    }).select("+password");
+
+    if(!user) throw new ApiError(409,"User is not registered!");
+
+    // compare password
+    const isValidPassword = await user.isPasswordCorrect(password)
+    if(!isValidPassword){
+        throw new ApiError(400,"Incorrect password!");
+    };
+
+    // generate tokens 
+    const {refreshToken, accessToken} = await generateAccessAndRefreshTokens(user._id);
+    
+    // increase login count and login at and inscrease number of token
+    user.lastLoginAt = new Date();
+    user.loginCount += 1;
+  
+    // return use
+    return {user,refreshToken,accessToken};
+
+}
+
+export {
+     registerUserService,
+     loginUserService
+ }
