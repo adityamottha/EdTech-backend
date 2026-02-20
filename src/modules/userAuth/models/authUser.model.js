@@ -57,15 +57,15 @@ const authUserSchema = new mongoose.Schema({
     },
 
     // role reference
-    roles: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Role",
-      },
-    ],
+    role: {
+        type:String,
+        enum:["Student","Teacher","Admin"],
+        required:true,
+    }
 
 
 },{timestamps:true});
+
 
 // PASSWORD HASH
 authUserSchema.pre("save", async function(){
@@ -88,4 +88,12 @@ authUserSchema.methods.isPasswordCorrect = async function(password){
     
    }
 }
+
+//REMOVE PASSWORD FROM JSON RESPONSE 
+authUserSchema.set("toJSON",{
+    transform:function(doc,ret,options){
+        delete ret.password
+        return ret
+    }
+});
 export const AuthUser = mongoose.model("AuthUser",authUserSchema)
