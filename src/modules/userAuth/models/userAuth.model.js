@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-
+import bcrypt from "bcrypt"
 const authUserSchema = new mongoose.Schema({
     email:{
         type:String,
@@ -67,4 +67,25 @@ const authUserSchema = new mongoose.Schema({
 
 },{timestamps:true});
 
+// PASSWORD HASH
+authUserSchema.pre("save", async function(){
+   try {
+     if(!this.isModified("password")) return;
+ 
+     this.password = await bcrypt.hash(this.password,10)
+   } catch (error) {
+    console.log("BCRYPT-ERROR :-",error?.message || "Failed to hash password");
+    next(error)
+   }
+})
+
+// PASSWORD COMPARE
+authUserSchema.methods.isPasswordCorrect = async function(password){
+   try {
+     return await bcrypt.compare(password,this.password)
+   } catch (error) {
+    console.log("BCRYPT-ERROR :- ",error?.message || "Failed to compare Password" );
+    
+   }
+}
 export const AuthUser = mongoose.model("AuthUser",authUserSchema)
