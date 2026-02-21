@@ -76,5 +76,6 @@ const logOutUserController = AsyncHandler(async (req,res)=>{
 
 export { 
     registerUserController,
-    loginUserController
+    loginUserController,
+    logOutUserController
  };
