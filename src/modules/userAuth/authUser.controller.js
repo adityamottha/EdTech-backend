@@ -1,6 +1,7 @@
+import { ApiError } from "../../utils/ApiError.js";
 import { ApiResponse } from "../../utils/ApiResponse.js"
 import { AsyncHandler } from "../../utils/AsyncHandler.js";
-import { loginUserService, registerUserService } from "./authUser.service.js";
+import { loginUserService, logoutUserService, registerUserService } from "./authUser.service.js";
 
 const registerUserController = AsyncHandler(async (req,res)=>{
     // get a data from req.body
@@ -48,7 +49,31 @@ const loginUserController = AsyncHandler(async (req,res)=>{
         "User Logged in successfully!"
     )
     )
-})
+});
+
+// LOGOUT-CONTROLLER--------------------------------------
+const logOutUserController = AsyncHandler(async (req,res)=>{
+    // get user id from req.user
+    const userId = req.user._id;
+
+    // call service function and pass the id
+    const logoutUser = await logoutUserService(userId);
+
+    // set options
+    const options ={
+      httpOnly:true,
+      secure:false
+   }
+
+    // return response and clear cookies
+    return res.status(200)
+    .clearCookie("refreshToken",options)
+    .clearCookie("accessToken",options)
+    .json(
+        new ApiResponse(200,logoutUser,"User loggedOut!")
+    )
+});
+
 export { 
     registerUserController,
     loginUserController
