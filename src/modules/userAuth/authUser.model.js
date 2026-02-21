@@ -173,7 +173,8 @@ authUserSchema.methods.generateAccessToken = function(){
 authUserSchema.methods.generateRefreshToken = function(){
     return jwt.sign(
         {
-            _id:this._id
+            _id:this._id,
+            refreshTokenVersion:this.refreshTokenVersion
         },
         process.env.REFRESH_TOKEN_SECRET,
         {

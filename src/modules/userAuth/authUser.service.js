@@ -1,5 +1,6 @@
 import { AuthUser } from "./authUser.model.js";
 import { ApiError } from "../../utils/ApiError.js";
+import jwt from "jsonwebtoken";
 import { generateAccessAndRefreshTokens } from "../../utils/AcceReffTokens.js";
 
 const registerUserService = async ({email,phoneNumber,password,role}) =>{
@@ -97,15 +98,19 @@ const refreshAccessTokenService = async (incomingRefreshToken) => {
   // Verifies the incoming refresh token using secret key and decodes its payload
   const decodedToken = jwt.verify(
     incomingRefreshToken,
-    process.env.REFRESH_TOKEN_KEY
+    process.env.REFRESH_TOKEN_SECRET
   );
 
+  // console.log("tokenVersion",decodedToken);
+  
   //find the user by userId and validate if user exist
-  const user = await AuthUser.findById(decodedToken.userId);
+  const user = await AuthUser.findById(decodedToken._id);
   if (!user) throw new ApiError(401, "Invalid refresh token");
 
+//   console.log("tokenVersion",user.refreshTokenVersion);
+  
   // check refresh-token is still valid by comaring token version
-  if (decodedToken.tokenVersion !== user.refreshTokenVersion) {
+  if (decodedToken.refreshTokenVersion !== user.refreshTokenVersion) {
     throw new ApiError(401, "Refresh token expired or revoked");
   }
 

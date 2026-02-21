@@ -12,8 +12,8 @@ const generateAccessAndRefreshTokens = async (userId) =>{
         if(!user) throw new ApiError(404,"User dont have an account!")
 
         // generate access and refres token in user
-        const refreshToken = user.generateAccessToken()
-        const accessToken = user.generateRefreshToken()
+        const refreshToken = user.generateRefreshToken()
+        const accessToken = user.generateAccessToken()
     
         // return
         return { refreshToken, accessToken}

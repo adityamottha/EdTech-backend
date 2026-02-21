@@ -1,7 +1,7 @@
 import { ApiError } from "../../utils/ApiError.js";
 import { ApiResponse } from "../../utils/ApiResponse.js"
 import { AsyncHandler } from "../../utils/AsyncHandler.js";
-import { loginUserService, logoutUserService, registerUserService } from "./authUser.service.js";
+import { loginUserService, logoutUserService, registerUserService, refreshAccessTokenService } from "./authUser.service.js";
 
 const registerUserController = AsyncHandler(async (req,res)=>{
     // get a data from req.body
@@ -74,8 +74,42 @@ const logOutUserController = AsyncHandler(async (req,res)=>{
     )
 });
 
+
+const refreshAccessTokenController = AsyncHandler(async (req, res) => {
+
+   // get a refresh token from cookies (from body for mobile app)
+  const incomingRefreshToken = req.cookies.refreshToken || req.body.refreshToken;
+
+// console.log("Incoming-refresh-token: ",incomingRefreshToken);
+
+//   call the service function and pass the token
+  const { accessToken, refreshToken } =
+   await refreshAccessTokenService(incomingRefreshToken);
+
+   // set the cookies 
+  const options = {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax"
+  };
+
+//   send refreshToken as request and get the new access toke behalf of that
+  return res
+    .status(200)
+    .cookie("refreshToken", refreshToken, options)
+    .cookie("accessToken", accessToken, options)
+    .json(
+      new ApiResponse(
+        200,
+        { accessToken },
+        "Access token refreshed successfully"
+      )
+    );
+});
+
 export { 
     registerUserController,
     loginUserController,
-    logOutUserController
+    logOutUserController,
+    refreshAccessTokenController
  };
