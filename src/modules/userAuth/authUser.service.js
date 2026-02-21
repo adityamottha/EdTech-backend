@@ -65,12 +65,28 @@ const loginUserService = async({identifier,password})=>{
     user.lastLoginAt = new Date();
     user.loginCount += 1;
   
+    await user.save();
     // return use
     return {user,refreshToken,accessToken};
 
 }
 
+// LOGOUT-SERVICE---------------------------
+const logoutUserService = async (userId) =>{
+
+// check user id is not empty 
+if(!userId) throw new ApiError(402,"UserId is required")
+
+// find user by is and update inc refreshToken version
+await AuthUser.findOneAndUpdate(userId,{$inc:{refreshTokenVersion: 1}});
+
+// return true 
+return true;
+
+}
+
 export {
      registerUserService,
-     loginUserService
+     loginUserService,
+     logoutUserService
  }
