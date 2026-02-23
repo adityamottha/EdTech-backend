@@ -109,13 +109,13 @@ const profileSchema = new mongoose.Schema({
         index:true
     },
 
-    first_Name:{
+    firstName:{
         type:String,
         trim:true,
         required:true
     },
 
-    last_name:{
+    lastName:{
         type:String,
         required:true,
         trim:true
