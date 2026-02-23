@@ -148,4 +148,4 @@ const profileSchema = new mongoose.Schema({
 
 },{timestamps:true})
 
-export const Profile = new mongoose.model("Profile",profileSchema)
+export const Profile = mongoose.model("Profile",profileSchema)
