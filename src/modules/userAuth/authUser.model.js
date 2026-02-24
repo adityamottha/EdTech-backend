@@ -98,7 +98,7 @@ const authUserSchema = new mongoose.Schema({
     role: {
         type:String,
         enum:["Student","Teacher","Admin"],
-        required:true,
+        default:"Student"
     },
 
      createdBy: {
@@ -123,6 +123,11 @@ const authUserSchema = new mongoose.Schema({
       ref: "AuthUser",
     },
 
+    accountStatus:{
+        type:String,
+        enum:["Active","Suspended", "banned"],
+        deafult:"Active"
+    },
 
 },{timestamps:true});
 
