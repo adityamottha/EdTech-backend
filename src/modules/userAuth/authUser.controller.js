@@ -5,7 +5,7 @@ import { loginUserService, logoutUserService, registerUserService, refreshAccess
 
 const registerUserController = AsyncHandler(async (req,res)=>{
     // get a data from req.body
-    const {email,phoneNumber,password,role} = req.body;
+    const {email,phoneNumber,password} = req.body;
 
     // call the service function and pass parameter
     const registerUser = await registerUserService({

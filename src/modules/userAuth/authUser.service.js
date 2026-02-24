@@ -3,13 +3,12 @@ import { ApiError } from "../../utils/ApiError.js";
 import jwt from "jsonwebtoken";
 import { generateAccessAndRefreshTokens } from "../../utils/AcceReffTokens.js";
 
-const registerUserService = async ({email,phoneNumber,password,role}) =>{
+const registerUserService = async ({email,phoneNumber,password}) =>{
 
     // check is user details are not empty
     if(!email?.trim()) throw new ApiError(400,"Email is required!");
     if(!phoneNumber) throw new ApiError(400,"Phone-Number is required!");
     if(!password?.trim()) throw new ApiError(400,"Password is required");
-    if(!role) throw new ApiError(400,"Role is required!");
 
     // check is user is not already in db
     const existedUser = await AuthUser.findOne({
@@ -22,7 +21,6 @@ const registerUserService = async ({email,phoneNumber,password,role}) =>{
         email:email.toLowerCase(),
         phoneNumber,
         password,
-        role
     });
 
     if(!user) throw new ApiError(500,"User failed to register!")

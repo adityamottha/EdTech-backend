@@ -5,7 +5,6 @@ env.config();
 import { connectDb } from "../db/dbConnection.js";
 import { AuthUser } from "../modules/userAuth/authUser.model.js";
 import { Profile } from "../modules/userProfile/models/profile.model.js";
-import bcrypt from "bcrypt"
 
 
 const seedAdmin = async ()=>{
@@ -23,16 +22,10 @@ const seedAdmin = async ()=>{
             console.log("Admin already existed!");
         };
 
-        // hashed password
-        const hashedPassword = await bcrypt.hash(
-            process.env.ADMIN_PASSWORD,
-            10
-        );
-
         // create admin in AuthUser
         const admin = await AuthUser.create({
             email:process.env.ADMIN_EMAIL,
-            password:hashedPassword,
+            password:process.env.ADMIN_PASSWORD,
             role:"Admin",
             phoneNumber:process.env.ADMIN_PHONE_NUMBER,
             refreshTokenVersion:0
