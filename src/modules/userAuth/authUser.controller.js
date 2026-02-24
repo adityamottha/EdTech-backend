@@ -12,7 +12,6 @@ const registerUserController = AsyncHandler(async (req,res)=>{
         email,
         phoneNumber,
         password,
-        role
     })
     // return response
     return res.status(200).json(
