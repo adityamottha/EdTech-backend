@@ -144,7 +144,13 @@ const profileSchema = new mongoose.Schema({
 
     settings:settingsSchema,
 
-    address:addressSchema
+    address:addressSchema,
+
+   
+    profileCompleted: {
+      type: Boolean,
+      default: false
+    }
 
 },{timestamps:true})
 
