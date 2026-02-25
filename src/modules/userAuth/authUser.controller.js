@@ -4,12 +4,11 @@ import { loginUserService, logoutUserService, registerUserService, refreshAccess
 
 const registerUserController = AsyncHandler(async (req,res)=>{
     // get a data from req.body
-    const {email,phoneNumber,password} = req.body;
+    const {email,password} = req.body;
 
     // call the service function and pass parameter
     const registerUser = await registerUserService({
         email,
-        phoneNumber,
         password,
     })
     // return response
@@ -18,10 +17,11 @@ const registerUserController = AsyncHandler(async (req,res)=>{
     )
 });
 
+// LOGIN-CONTROLLER--------------------------------
 const loginUserController = AsyncHandler(async (req,res)=>{
     // call service function and pass req.body 
     const {user,refreshToken,accessToken} = await loginUserService({
-        identifier:req.body.identifier,
+        email:req.body.email,
         password:req.body.password
     });
 
