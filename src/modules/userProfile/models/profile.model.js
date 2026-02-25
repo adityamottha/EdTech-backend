@@ -121,6 +121,15 @@ const profileSchema = new mongoose.Schema({
         trim:true
     },
 
+     phoneNumber :{
+        type:String,
+        trim:true,
+        required:true,
+        unique:true,
+        sparse:true
+    },
+
+
     avatar:{
         type:String // cloudinary
     },
