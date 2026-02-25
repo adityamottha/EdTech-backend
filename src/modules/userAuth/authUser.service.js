@@ -3,23 +3,19 @@ import { ApiError } from "../../utils/ApiError.js";
 import jwt from "jsonwebtoken";
 import { generateAccessAndRefreshTokens } from "../../utils/AcceReffTokens.js";
 
-const registerUserService = async ({email,phoneNumber,password}) =>{
+const registerUserService = async ({email,password}) =>{
 
     // check is user details are not empty
     if(!email?.trim()) throw new ApiError(400,"Email is required!");
-    if(!phoneNumber) throw new ApiError(400,"Phone-Number is required!");
     if(!password?.trim()) throw new ApiError(400,"Password is required");
 
     // check is user is not already in db
-    const existedUser = await AuthUser.findOne({
-        $or:[{email:email.toLowerCase()},{phoneNumber}]
-    });
+    const existedUser = await AuthUser.findOne({email:email.toLowerCase()});
     if(existedUser) throw new ApiError(409,"User already registered!");
 
     // create user
     const user = await AuthUser.create({
         email:email.toLowerCase(),
-        phoneNumber,
         password,
     });
 
@@ -30,24 +26,18 @@ const registerUserService = async ({email,phoneNumber,password}) =>{
 }
 
 // LOGIN-SERVICE-----------------------------
-const loginUserService = async({identifier,password})=>{
+const loginUserService = async({email,password})=>{
 
     // check each fields are required
-    if(!identifier?.trim()){
+    if(!email?.trim()){
         throw new ApiError(400,"Email and PhoneNumber is required!");
     };
     if(!password?.trim()){
         throw new ApiError(400,"Password is required!");
     };
 
-    // detect email 
-    const isEmail = identifier.includes("@");
-
-    // run query 
-    const query = isEmail ? {email:identifier.toLowerCase()} : {phoneNumber:identifier}
-
     // find user by email and phoneNumber
-    const user = await AuthUser.findOne(query).select("+password");
+    const user = await AuthUser.findOne({email}).select("+password");
 
     if(!user) throw new ApiError(409,"User is not registered!");
 
