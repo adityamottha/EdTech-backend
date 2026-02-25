@@ -4,6 +4,6 @@ import { verifyJWT } from "../../middlewares/verifyJWT.middleware.js";
 
 const router = Router();
 
-router.route("/profile").post(verifyJWT,profileController)
+router.route("/common-profile").post(verifyJWT,profileController)
 
 export default router;
