@@ -39,7 +39,8 @@ const seedAdmin = async ()=>{
         const adminProfile= await Profile.create({
             userId:admin._id,
             firstName:process.env.FIRST_NAME,
-            lastName:process.env.LAST_NAME
+            lastName:process.env.LAST_NAME,
+            phoneNumber:process.env.ADMIN_PHONE_NUMBER
         });
 
         if(adminProfile){
