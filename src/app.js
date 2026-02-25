@@ -20,10 +20,12 @@ app.use(cookieParser());
 import  auth  from "./modules/userAuth/authUser.routes.js"
 app.use("/api/v1/users",auth);
 
+// PROFILE-ROUTER
+import profile from "./modules/userProfile/Profile.routes.js";
+app.use("/api/v1/profile",profile);
 
 // ERROR MIDDLEWARE--------------------------------
 import { errorMiddleware } from "./middlewares/error.middleware.js";
 app.use(errorMiddleware);
-
 
 export { app }
