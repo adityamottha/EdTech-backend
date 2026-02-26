@@ -49,4 +49,4 @@ const studentProfileSchema = new Schema({
 
 },{timestamps:true});
 
-export const Student = model("Student",studentProfileSchema)
+export const studentProfile = model("StudentProfile",studentProfileSchema)
