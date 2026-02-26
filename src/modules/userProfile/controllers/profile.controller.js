@@ -8,7 +8,7 @@ const profileController = AsyncHandler(async (req,res)=>{
     const userId = req.user?._id;
     if(!userId) throw new ApiError(500,"UserId is not available!")
 
-    console.log(userId)
+    // console.log(userId)
 
     // find avatar from files 
     const avatar = req.files?.avatar?.[0]?.path;
