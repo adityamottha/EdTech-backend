@@ -48,6 +48,7 @@ const profileService = async ({
 
    // create profile
    const profile = await Profile.create({
+    userId,
     firstName,
     lastName,
     phoneNumber,

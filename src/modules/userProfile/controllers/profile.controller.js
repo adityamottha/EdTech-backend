@@ -1,11 +1,14 @@
 import { AsyncHandler } from "../../../utils/AsyncHandler.js";
 import { ApiResponse } from "../../../utils/ApiResponse.js"
 import { profileService } from "../services/profile.service.js";
-import { json } from "express";
+import { ApiError } from "../../../utils/ApiError.js";
 
 const profileController = AsyncHandler(async (req,res)=>{
     // find user_id from logged in user 
     const userId = req.user?._id;
+    if(!userId) throw new ApiError(500,"UserId is not available!")
+
+    console.log(userId)
 
     // find avatar from files 
     const avatar = req.files?.avatar?.[0]?.path;
@@ -21,7 +24,7 @@ const profileController = AsyncHandler(async (req,res)=>{
     } = req.body;
 
     // get service function and pass-data,
-    const profile = profileService({
+    const profile = await  profileService({
         userId,firstName,lastName,
         phoneNumber,avatar,dateOfBirth,
         bio,address,timezone,socialLinks
