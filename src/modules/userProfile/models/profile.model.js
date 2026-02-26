@@ -20,7 +20,7 @@ const socialLinksSchema = new mongoose.Schema({
         type:String,
         trim:true
     }
-});
+},{_id:false});
 
 
 const settingsSchema = new mongoose.Schema({
@@ -97,7 +97,7 @@ const addressSchema = new mongoose.Schema({
         trim:true
     }
 
-});
+},{_id:false});
 
 
 const profileSchema = new mongoose.Schema({
