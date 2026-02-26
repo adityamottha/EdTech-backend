@@ -1,7 +1,11 @@
+// import "../config/env.js";
+import env from "dotenv";
+env.config();
 import { v2 as cloudinary } from "cloudinary";
 import fs from "fs";
-import { ApiError } from "./ApiError.js"
+import { ApiError } from "./ApiError.js";
 
+console.log("API_KEY :- ", process.env.CLOUDINARY_API_KEY,)
 // config cloudinary
 cloudinary.config({
     cloud_name:process.env.CLOUDINARY_CLOUD_NAME,
@@ -22,6 +26,8 @@ const uploadFileOnCloudinary = async (localFilePath)=>{
         if(fs.existsSync(localFilePath)){
             fs.unlinkSync(localFilePath)
         }
+
+        return response;
     } catch (error) {
         console.log("CLOUDINARY FAILED TO UPLOAD",error?.message);
         if(fs.existsSync(localFilePath)){

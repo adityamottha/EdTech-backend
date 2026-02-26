@@ -22,15 +22,16 @@ const profileService = async ({
 
     if(!phoneNumber?.trim()) throw new ApiError(400,"Phone-Number is required!");
 
-    if(!avatar?.trim()) throw new ApiError(400,"Avatar is required!");
+    if(!avatar) throw new ApiError(400,"Avatar is required!");
 
     if(!dateOfBirth?.trim()) throw new ApiError(400,"dateOfBirth is required!");
 
     if(!bio?.trim()) throw new ApiError(400,"bio is required!");
 
-    if(!address?.trim()) throw new ApiError(400,"address is required!");
+    if(!address) throw new ApiError(400,"address is required!");
 
     if(!timezone?.trim()) throw new ApiError(400,"timezone is required!");
+    if(!socialLinks) throw new ApiError(400,"Social links are required!")
     
     // find profile 
     const existedPofile = await Profile.findOne({userId});
