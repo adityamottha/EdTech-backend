@@ -49,28 +49,6 @@ const teacherProfileSchema = new Schema({
         default:0
     },
 
-    // APPROVAL 
-
-    approvalStatus:{
-        type:String,
-        enum:["Pending","Approved","Rejected"],
-        default:"Pending"
-    },
-
-    isApproved:{
-        type:Boolien,
-        default:false
-    },
-
-    approvedBy:{
-        type:Schema.Types.ObjectId,
-        ref:"Profile"
-    },
-
-    approvedDate:{
-        type:Date
-    },
-
     // BANKING
     bankDetails: {
       type: String // store encrypted JSON string
