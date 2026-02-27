@@ -155,11 +155,6 @@ const profileSchema = new mongoose.Schema({
 
     address:addressSchema,
 
-   
-    profileCompleted: {
-      type: Boolean,
-      default: false
-    }
 
 },{timestamps:true})
 

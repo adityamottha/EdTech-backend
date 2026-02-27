@@ -57,6 +57,11 @@ const authUserSchema = new mongoose.Schema({
         ref: "AdminProfile"
     },
 
+     profileCompleted: {
+      type: Boolean,
+      default: false
+    },
+
     //    SECURITY & SESSION CONTROL
 
     lastLoginAt: {
