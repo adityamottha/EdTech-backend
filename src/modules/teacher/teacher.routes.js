@@ -7,7 +7,7 @@ const router = Router();
 
 router.route("/teacher-application").post(
     verifyJWT,
-    isProfileCompleted(),
+    isProfileCompleted,
     teacherApplicationController
 );
 
