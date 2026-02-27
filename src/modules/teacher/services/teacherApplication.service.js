@@ -29,4 +29,6 @@ const teacherApplicationService = async ({userId,specialization,qualification})=
     // return
     
     return CreateApplication;
-}
+};
+
+export { teacherApplicationService }
