@@ -62,6 +62,11 @@ const profileService = async ({
    });
    
    // update field completed and time of profile 
+   await AuthUser.findByIdAndUpdate(userId,{
+    profileCompleted:true,
+    profileCompletedAt: new Date()
+   });
+ 
  // return
  return profile;
 }
