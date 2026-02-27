@@ -24,6 +24,9 @@ app.use("/api/v1/users",auth);
 import profile from "./modules/userProfile/Profile.routes.js";
 app.use("/api/v1/profile",profile);
 
+import teacher from "./modules/teacher/teacher.routes.js";
+app.use("/api/v1/teacher",teacher)
+
 // ERROR MIDDLEWARE--------------------------------
 import { errorMiddleware } from "./middlewares/error.middleware.js";
 app.use(errorMiddleware);
