@@ -17,11 +17,11 @@ app.use(express.urlencoded({limit:"16kb",extended:true}));
 app.use(cookieParser());
 
 // AUTH-ROUTER
-import  auth  from "./modules/userAuth/authUser.routes.js"
+import  auth  from "./modules/auth/authUser.routes.js"
 app.use("/api/v1/users",auth);
 
 // PROFILE-ROUTER
-import profile from "./modules/userProfile/Profile.routes.js";
+import profile from "./modules/profile/Profile.routes.js";
 app.use("/api/v1/profile",profile);
 
 import teacher from "./modules/teacher/teacher.routes.js";

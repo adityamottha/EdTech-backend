@@ -1,4 +1,4 @@
-import { AsyncHandler } from "../../utils/ApiResponse.js";
+import { AsyncHandler } from "../../utils/AsyncHandler.js";
 import { teacherApplicationService } from "./services/teacherApplication.service.js";
 import { ApiResponse } from "../../utils/ApiResponse.js";
 
