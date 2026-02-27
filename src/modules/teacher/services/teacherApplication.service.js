@@ -8,19 +8,25 @@ const teacherApplicationService = async ({userId,specialization,qualification})=
     };
 
     // find and throw error if teacher already submitted application
-    const submittedApplication = await TeacherApplication.findOne({userId});
+    const application = await TeacherApplication.findOne({userId});
 
     if(submittedApplication){
         throw new ApiError(409,"User already submitted application!")
     };
 
     // create application
-    const application = await TeacherApplication.create({
+    const CreateApplication = await application.create({
         userId,
         specialization,
-        qualification
+        qualification,
+        applicationSubmittedAt: new Date()
     });
-    
-    // return
 
+    if(!CreateApplication){
+        throw new ApiError(500,"Application failed to submit!")
+    };
+
+    // return
+    
+    return CreateApplication;
 }
