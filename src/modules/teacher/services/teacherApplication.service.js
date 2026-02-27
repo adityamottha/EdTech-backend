@@ -3,19 +3,28 @@ import { ApiError } from "../../../utils/ApiError.js";
 
 const teacherApplicationService = async ({userId,specialization,qualification})=>{
     // check if fields are empty if true throw error
-    if([userId,specialization,qualification].some(fields=>!fields?.trim())){
-        throw new ApiError(400,"All fields are required!");
-    };
+   if(!userId){
+    throw new ApiError(400,"userId is Required!")
+   };
+
+   if(!specialization?.trim()){
+    throw new ApiError(400,"specialization is required!")
+   };
+
+   if(!qualification){
+    throw new ApiError(400,"Qualification is required!")
+   };
+
 
     // find and throw error if teacher already submitted application
-    const application = await TeacherApplication.findOne({userId});
+    const existedApplication = await TeacherApplication.findOne({userId});
 
-    if(submittedApplication){
+    if(existedApplication){
         throw new ApiError(409,"User already submitted application!")
     };
 
     // create application
-    const CreateApplication = await application.create({
+    const CreateApplication = await TeacherApplication.create({
         userId,
         specialization,
         qualification,

@@ -7,9 +7,9 @@ const teacherApplicationController = AsyncHandler(async (req,res)=>{
     const userId = req.user?._id;
 
     // get data from req.body
-    const specialization = req.body;
+    const {specialization, qualification} = req.body;
 
-    const qualification = req.body.qualification? JSON.parse(req.body.qualification) : null;
+    // const qualification = req.body.qualification? JSON.parse(req.body.qualification) : null;
 
     // call the service function
     const application = await teacherApplicationService({
