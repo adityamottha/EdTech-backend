@@ -35,9 +35,13 @@ const teacherApplicationSchema = new Schema({
 
     rejectedReason:{
         type:String
+    },
+
+    applicationSubmittedAt:{
+        type:Date,
+        default:Date.now()
     }
 
-    
 },{timestamps:true});
 
 export const TeacherApplication = model("TeacherApplication",teacherApplicationSchema)
