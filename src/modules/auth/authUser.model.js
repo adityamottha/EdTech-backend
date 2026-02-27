@@ -62,6 +62,10 @@ const authUserSchema = new mongoose.Schema({
       default: false
     },
 
+    profileCompletedAt: {
+      type:Date
+    },
+
     //    SECURITY & SESSION CONTROL
 
     lastLoginAt: {

@@ -1,5 +1,6 @@
 import { ApiError } from "../../../utils/ApiError.js";
 import { Profile } from "../models/profile.model.js";
+import { AuthUser } from "../../auth/authUser.model.js";
 import { uploadFileOnCloudinary } from "../../../utils/cloudinary.js";
 
 const profileService = async ({
@@ -58,11 +59,10 @@ const profileService = async ({
     address,
     socialLinks,
     timezone,
-    profileCompleted:true
    });
    
+   // update field completed and time of profile 
  // return
-
  return profile;
 }
 
