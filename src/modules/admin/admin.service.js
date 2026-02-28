@@ -6,7 +6,7 @@ const getTeacherApplicationRequestService = async () =>{
             // only users who apply for teacher
             $lookup:{
                 from: "TeacherApplication",
-                userId: "$_id",
+                let: { userId: "$_id" },
                 pipeline:[
                     {
                         $match:{
