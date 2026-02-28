@@ -24,8 +24,13 @@ app.use("/api/v1/users",auth);
 import profile from "./modules/profile/Profile.routes.js";
 app.use("/api/v1/profile",profile);
 
+// TEACHER-ROUTER
 import teacher from "./modules/teacher/teacher.routes.js";
-app.use("/api/v1/teacher",teacher)
+app.use("/api/v1/teacher",teacher);
+
+// ADMIN-ROUTER
+import admin from "./modules/admin/admin.routes.js";
+app.use("/api/v1/admin",admin)
 
 // ERROR MIDDLEWARE--------------------------------
 import { errorMiddleware } from "./middlewares/error.middleware.js";

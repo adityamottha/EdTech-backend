@@ -5,7 +5,7 @@ import { getTeacherApplicationRequestController } from "./admin.controller.js";
 
 const router = Router();
 
-router.route("/applications").post(
+router.route("/applications").get(
     verifyJWT,
     authorizeRole("Admin"),
     getTeacherApplicationRequestController
