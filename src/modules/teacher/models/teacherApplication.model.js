@@ -27,15 +27,6 @@ const teacherApplicationSchema = new Schema({
         }
     ],
 
-    approvalStatus:{
-        type:String,
-        enum:["Pending","Approved","Rejected"],
-        default:"Pending"
-    },
-
-    rejectedReason:{
-        type:String
-    },
 
     applicationSubmittedAt:{
         type:Date,
