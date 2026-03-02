@@ -1,4 +1,4 @@
-import { approvedTeacherService, getTeacherApplicationRequestService } from "./admin.service.js";
+import { approvedTeacherService, getTeacherApplicationRequestService, rejectApplicationService } from "./admin.service.js";
 import { AsyncHandler } from "../../utils/AsyncHandler.js";
 import { ApiResponse } from "../../utils/ApiResponse.js"
 
@@ -29,11 +29,15 @@ const approvedTeacherController = AsyncHandler(async (req,res)=>{
 });
 
 const rejectApplicationController = AsyncHandler(async (req,res)=>{
-    // get userId and Message from req.body
+    // get userId and reason from req.body
+    const {userId,reason} = req.body;
+
     // call service function pass parameters
+    const rejectedUser = await rejectApplicationService({userId,reason});
+
     // send response 
     return res.status(200).json(
-        new ApiResponse(200,{},"Rejected application")
+        new ApiResponse(200,rejectedUser,"Rejected application")
     );
     
 });

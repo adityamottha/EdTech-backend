@@ -122,7 +122,7 @@ const rejectApplicationService = async ({userId,reason})=>{
   };
 
   // update fields
-  const updatedUser = await AuthUser.findOne(userId,{
+  const updatedUser = await AuthUser.findByIdAndUpdate(userId,{
     approvalStatus:"Rejected",
     rejectedReason:reason
   },{new:true});
