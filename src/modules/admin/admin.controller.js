@@ -28,8 +28,18 @@ const approvedTeacherController = AsyncHandler(async (req,res)=>{
 
 });
 
+const rejectApplicationController = AsyncHandler(async (req,res)=>{
+    // get userId and Message from req.body
+    // call service function pass parameters
+    // send response 
+    return res.status(200).json(
+        new ApiResponse(200,{},"Rejected application")
+    );
+    
+});
 
 export { 
     getTeacherApplicationRequestController,
-    approvedTeacherController
+    approvedTeacherController,
+    rejectApplicationController
  }
