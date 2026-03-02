@@ -73,9 +73,9 @@ const approvedTeacherService = async ({userId})=>{
   };
 
   // find user by userId
-  const user = await AuthUser.findOne({userId}).select("-password");
+  const user = await AuthUser.findOne({_id:userId});
   if(!user){
-    throw new ApiError(409,"User not existed!")
+    throw new ApiError(404,"User not found!")
   };
 
   // id user has already approved status throw error 
@@ -84,14 +84,16 @@ const approvedTeacherService = async ({userId})=>{
   };
 
   // if not so approved status
-    await AuthUser.findByIdAndUpdate(userId,{
+    const updateUser = await AuthUser.findByIdAndUpdate(userId,{
     role:"Teacher",
     approvalStatus:"Approved",
     statusApprovedAt: new Date()
-   });
+   },
+   {new:true}
+  );
 
   // return 
-  return user;
+  return updateUser;
 }
 
 export { 

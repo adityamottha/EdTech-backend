@@ -16,7 +16,7 @@ const getTeacherApplicationRequestController = AsyncHandler(async (req,res)=>{
 
 const approvedTeacherController = AsyncHandler(async (req,res)=>{
     // get userId from req.body
-    const userId = req.body;
+    const userId = req.body.userId;
 
     // call the service function pass userId
     const teacher = await approvedTeacherService({userId});
@@ -25,7 +25,7 @@ const approvedTeacherController = AsyncHandler(async (req,res)=>{
     return res.status(200).json(
         new ApiResponse(200,teacher,"Approved Teacher successfully..")
     );
-    
+
 });
 
 
