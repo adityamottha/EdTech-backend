@@ -131,8 +131,43 @@ const rejectApplicationService = async ({userId,reason})=>{
   return updatedUser;
 };
 
+// CREATE-USER-BY-ADMIN----------------------------------
+const createUserService = async ({email,password,role})=>{
+  // check all fields are required
+  if(!email?.trim()){
+    throw new ApiError(400,"Email is required!");
+  };
+
+  if(!password?.trim()){
+    throw new ApiError(400,"Password is required!");
+  };
+
+  if(!role?.trim()){
+    throw new ApiError(400,"Role is required!");
+  };
+
+  // find user is not register already
+  const existedUser = await AuthUser.findOne({email});
+  if(existedUser){
+    throw new ApiError(408,"User already existed!");
+  };
+
+  // create user 
+  const user = await AuthUser.create({
+    email:email.toLowerCase(),
+    password,
+    role
+  });
+
+  // return
+  return user;
+
+};
+
+
 export { 
   getTeacherApplicationRequestService,
   approvedTeacherService,
-  rejectApplicationService
+  rejectApplicationService,
+  createUserService
  }
