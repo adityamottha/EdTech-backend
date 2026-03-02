@@ -94,9 +94,45 @@ const approvedTeacherService = async ({userId})=>{
 
   // return 
   return updateUser;
-}
+};
+
+const rejectApplicationService = async ({userId,reason})=>{
+  // check userId and message is required
+  if(!userId){
+    throw new ApiError(400,"userId is required!");
+  };
+
+  if(!reason){
+    throw new ApiError(400,"Reason is required!");
+  };
+
+  // find user by userId
+  const user = await AuthUser.findOne({_id:userId})
+  if(!user){
+    throw new ApiError(404,"User not found")
+  };
+  
+  // user is not approved or reject already
+  if(user.approvalStatus === "Approved" && user.role === "Teacher"){
+    throw new ApiError(408,"User already approved!")
+  };
+
+  if(user.approvalStatus === "Rejected"){
+    throw new ApiError(408,"User already rejected!")
+  };
+
+  // update fields
+  const updatedUser = await AuthUser.findOne(userId,{
+    approvalStatus:"Rejected",
+    rejectedReason:reason
+  },{new:true});
+
+  // return
+  return updatedUser;
+};
 
 export { 
   getTeacherApplicationRequestService,
-  approvedTeacherService
+  approvedTeacherService,
+  rejectApplicationService
  }
