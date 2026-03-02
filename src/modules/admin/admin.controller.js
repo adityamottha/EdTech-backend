@@ -1,4 +1,4 @@
-import { approvedTeacherService, getTeacherApplicationRequestService, rejectApplicationService } from "./admin.service.js";
+import { approvedTeacherService, createUserService, getTeacherApplicationRequestService, rejectApplicationService } from "./admin.service.js";
 import { AsyncHandler } from "../../utils/AsyncHandler.js";
 import { ApiResponse } from "../../utils/ApiResponse.js"
 
@@ -28,6 +28,8 @@ const approvedTeacherController = AsyncHandler(async (req,res)=>{
 
 });
 
+
+// REJECTED-APPLICATION---------------------
 const rejectApplicationController = AsyncHandler(async (req,res)=>{
     // get userId and reason from req.body
     const {userId,reason} = req.body;
@@ -42,8 +44,23 @@ const rejectApplicationController = AsyncHandler(async (req,res)=>{
     
 });
 
+// CREATED-USER-BY-ADMIN-----------------
+const createUserController = AsyncHandler(async (req,res)=>{
+    // get all data from req.body
+    const {email,password,role} = req.body;
+
+    // call service function and pass parameter
+    const user = await createUserService({email,password,role});
+
+    // return response 
+    return res.status(200).json(
+        new ApiResponse(200,user,"User register by ADMIN successfully!")
+    );
+});
+
 export { 
     getTeacherApplicationRequestController,
     approvedTeacherController,
-    rejectApplicationController
+    rejectApplicationController,
+    createUserController
  }
