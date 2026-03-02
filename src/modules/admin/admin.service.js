@@ -1,3 +1,4 @@
+import { ApiError } from "../../utils/ApiError.js";
 import { AuthUser } from "../auth/authUser.model.js";
 
 const getTeacherApplicationRequestService = async () =>{
@@ -67,9 +68,26 @@ const getTeacherApplicationRequestService = async () =>{
 
 const approvedTeacherService = async ({userId})=>{
   // check userId is required
+  if(!userId){
+    throw new ApiError(400,"UserId is required!")
+  };
+
   // find user by userId
+  const user = await AuthUser.findOne({userId}).select("-password");
+  if(!user){
+    throw new ApiError(409,"User not existed!")
+  };
+
   // id user has already approved status throw error 
+  if(user.role === "Teacher"){
+    throw new ApiError(408,"Already approved profile!")
+  };
+
   // if not  so approved status
+   await AuthUser.findByIdAndUpdate(userId,{
+    role:"Teacher",
+    
+   })
   // update fields like approvedAt 
   // return 
 

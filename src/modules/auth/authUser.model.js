@@ -102,6 +102,16 @@ const authUserSchema = new mongoose.Schema({
         default:"Student"
     },
 
+    approvalStatus:{
+        type:String,
+        enum:["Pending","Approved","Rejected"],
+        default:"Pending"
+    },
+
+    rejectedReason:{
+        type:String
+    },
+    
      createdBy: {
       type: String,
       enum: ["SELF", "ADMIN"],
