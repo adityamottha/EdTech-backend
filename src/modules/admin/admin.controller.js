@@ -12,4 +12,16 @@ const getTeacherApplicationRequestController = AsyncHandler(async (req,res)=>{
     );
 });
 
-export { getTeacherApplicationRequestController }
+// APPORVED TEACHER APPLICATATION STATUS
+
+const approvedTeacherController = AsyncHandler(async (req,res)=>{
+    // get userId from req.body
+    // call the service function pass userId
+    // send response 
+});
+
+
+export { 
+    getTeacherApplicationRequestController,
+    approvedTeacherController
+ }
