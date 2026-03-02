@@ -83,14 +83,18 @@ const approvedTeacherService = async ({userId})=>{
     throw new ApiError(408,"Already approved profile!")
   };
 
-  // if not  so approved status
-   await AuthUser.findByIdAndUpdate(userId,{
+  // if not so approved status
+    await AuthUser.findByIdAndUpdate(userId,{
     role:"Teacher",
-    approvalStatus:"Approved"
-   })
-  // update fields like approvedAt 
-  // return 
+    approvalStatus:"Approved",
+    statusApprovedAt: new Date()
+   });
 
+  // return 
+  return user;
 }
 
-export { getTeacherApplicationRequestService }
+export { 
+  getTeacherApplicationRequestService,
+  approvedTeacherService
+ }
