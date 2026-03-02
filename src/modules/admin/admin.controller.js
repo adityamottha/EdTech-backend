@@ -18,6 +18,9 @@ const approvedTeacherController = AsyncHandler(async (req,res)=>{
     // get userId from req.body
     // call the service function pass userId
     // send response 
+    return res.status(200).json(
+        new ApiResponse(200,{},"Approved Teacher successfully..")
+    );
 });
 
 
