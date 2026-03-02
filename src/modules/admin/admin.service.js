@@ -156,7 +156,10 @@ const createUserService = async ({email,password,role})=>{
   const user = await AuthUser.create({
     email:email.toLowerCase(),
     password,
-    role
+    role,
+    isVarified:true,
+    createdBy:"ADMIN"
+
   });
 
   // return
