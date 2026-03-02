@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { verifyJWT } from "../../middlewares/verifyJWT.middleware.js";
 import { authorizeRole } from "../../middlewares/authorizeRole.middleware.js"
-import { approvedTeacherController, getTeacherApplicationRequestController, rejectApplicationController } from "./admin.controller.js";
+import { approvedTeacherController, createUserController, getTeacherApplicationRequestController, rejectApplicationController } from "./admin.controller.js";
 
 const router = Router();
 
@@ -23,7 +23,13 @@ router.route("/reject-application").patch(
     verifyJWT,
     authorizeRole("Admin"),
     rejectApplicationController
-)
+);
 
+// CREATE USER BY ADMIN----------------------
+router.route("/create-user").post(
+    verifyJWT,
+    authorizeRole("Admin"),
+    createUserController
+);
 
 export default router;
