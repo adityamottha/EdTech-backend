@@ -108,10 +108,14 @@ const authUserSchema = new mongoose.Schema({
         default:"Pending"
     },
 
+    statusApprovedAt:{
+        type:Date
+    },
+
     rejectedReason:{
         type:String
     },
-    
+
      createdBy: {
       type: String,
       enum: ["SELF", "ADMIN"],

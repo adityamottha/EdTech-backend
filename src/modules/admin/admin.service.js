@@ -79,14 +79,14 @@ const approvedTeacherService = async ({userId})=>{
   };
 
   // id user has already approved status throw error 
-  if(user.role === "Teacher"){
+  if(user.role === "Teacher" && user.approvalStatus === "Approved"){
     throw new ApiError(408,"Already approved profile!")
   };
 
   // if not  so approved status
    await AuthUser.findByIdAndUpdate(userId,{
     role:"Teacher",
-    
+    approvalStatus:"Approved"
    })
   // update fields like approvedAt 
   // return 
