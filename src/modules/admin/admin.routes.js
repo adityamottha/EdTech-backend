@@ -5,6 +5,15 @@ import { approvedTeacherController, createUserController, getAllUsersController,
 
 const router = Router();
 
+// GET ALL USERS
+router.route("/all-users").get(
+    verifyJWT,
+    authorizeRole("Admin"),
+    getAllUsersController
+);
+
+// GET ALL APPLICATIONS
+
 router.route("/applications").get(
     verifyJWT,
     authorizeRole("Admin"),
@@ -32,11 +41,6 @@ router.route("/create-user").post(
     createUserController
 );
 
-// GET ALL USERS
-router.route("/all-users").get(
-    verifyJWT,
-    authorizeRole("Admin"),
-    getAllUsersController
-)
+
 
 export default router;
