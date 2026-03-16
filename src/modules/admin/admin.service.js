@@ -1,6 +1,43 @@
 import { ApiError } from "../../utils/ApiError.js";
 import { AuthUser } from "../auth/authUser.model.js";
 
+// GET AL USERS---------------------
+const getAllUsersService = async () => {
+  return await AuthUser.aggregate([
+    {
+      $lookup: {
+        from: "profiles",
+        let: { userId: "$_id" },
+        pipeline: [
+          {
+            $match: {
+              $expr: {
+                $eq: ["$userId", "$$userId"]
+              }
+            }
+          },
+          {
+            $project: {
+              firstName: 1,
+              lastName: 1,
+              phoneNumber: 1
+            }
+          }
+        ],
+        as: "profile"
+      }
+    },
+    {
+      $project: {
+        email: 1,
+        role: 1,
+        profile: { $arrayElemAt: ["$profile", 0] }
+      }
+    }
+  ]);
+};
+
+// GET ALL TEACHER APPLICATION----------------------------------------
 const getTeacherApplicationRequestService = async () =>{
   return await AuthUser.aggregate([
     {
