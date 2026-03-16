@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { verifyJWT } from "../../middlewares/verifyJWT.middleware.js";
 import { authorizeRole } from "../../middlewares/authorizeRole.middleware.js"
-import { approvedTeacherController, createUserController, getTeacherApplicationRequestController, rejectApplicationController } from "./admin.controller.js";
+import { approvedTeacherController, createUserController, getAllUsersController, getTeacherApplicationRequestController, rejectApplicationController } from "./admin.controller.js";
 
 const router = Router();
 
@@ -31,5 +31,12 @@ router.route("/create-user").post(
     authorizeRole("Admin"),
     createUserController
 );
+
+// GET ALL USERS
+router.route("/all-users").get(
+    verifyJWT,
+    authorizeRole("Admin"),
+    getAllUsersController
+)
 
 export default router;

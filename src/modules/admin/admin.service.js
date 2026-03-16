@@ -209,5 +209,6 @@ export {
   getTeacherApplicationRequestService,
   approvedTeacherService,
   rejectApplicationService,
-  createUserService
+  createUserService,
+  getAllUsersService
  }

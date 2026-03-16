@@ -1,7 +1,19 @@
-import { approvedTeacherService, createUserService, getTeacherApplicationRequestService, rejectApplicationService } from "./admin.service.js";
+import { approvedTeacherService, createUserService, getTeacherApplicationRequestService, rejectApplicationService,getAllUsersService } from "./admin.service.js";
 import { AsyncHandler } from "../../utils/AsyncHandler.js";
 import { ApiResponse } from "../../utils/ApiResponse.js"
 
+// GET ALL USERS
+const getAllUsersController = AsyncHandler(async (req,res)=>{
+    // call the service function 
+    const users = await getAllUsersService()
+
+    // send response 
+    return res.status(200).json(
+        new ApiResponse(200,users,"All user fetch successfully!")
+    );
+});
+
+// GET ALL TEACHER APPLICATIONS
 const getTeacherApplicationRequestController = AsyncHandler(async (req,res)=>{
     // call service function 
     const applications = await getTeacherApplicationRequestService();
@@ -62,5 +74,6 @@ export {
     getTeacherApplicationRequestController,
     approvedTeacherController,
     rejectApplicationController,
-    createUserController
+    createUserController,
+    getAllUsersController
  }
