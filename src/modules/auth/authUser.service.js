@@ -142,6 +142,8 @@ const changePasswordService = async (userId,oldPassword,newPassword)=>{
   // save user 
   await user.save();
 
+  // return 
+  return user;
 };
 
 export {
