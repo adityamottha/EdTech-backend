@@ -105,9 +105,16 @@ const refreshAccessTokenController = AsyncHandler(async (req, res) => {
     );
 });
 
+// CHANGE PASSWORD CONTROLLER -------------------------------
+const changePasswordController = AsyncHandler(async (req,res)=>{
+    // get data from req.body
+    // call service function
+    // send response
+})
 export { 
     registerUserController,
     loginUserController,
     logOutUserController,
-    refreshAccessTokenController
+    refreshAccessTokenController,
+    changePasswordController
  };
