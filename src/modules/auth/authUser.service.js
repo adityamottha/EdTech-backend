@@ -111,7 +111,7 @@ const refreshAccessTokenService = async (incomingRefreshToken) => {
 };
 
 // CHANGE PASSWORD SERVICE--------------
-const changePasswordService = async (userId,oldPassword,newPassword)=>{
+const changePasswordService = async ({userId,oldPassword,newPassword})=>{
   // check fields are not empty 
   if(!oldPassword.trim()) throw new ApiError(400,"Old password is required!");
   if(!newPassword.trim()) throw new ApiError(400,"New password is required!");
