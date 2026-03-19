@@ -111,17 +111,39 @@ const refreshAccessTokenService = async (incomingRefreshToken) => {
 };
 
 // CHANGE PASSWORD SERVICE--------------
-const changePasswordService = async (oldPassword,newPassword)=>{
+const changePasswordService = async (userId,oldPassword,newPassword)=>{
   // check fields are not empty 
-  // check new password must be diffrante from old one
-  // find user by userId + password
-  // compare password 
-  // check old password to new 
-  // update time of password change 
-  // save user 
+  if(!oldPassword.trim()) throw new ApiError(400,"Old password is required!");
+  if(!newPassword.trim()) throw new ApiError(400,"New password is required!");
+  if(!userId) throw new ApiError(400,"UserId is required!");
 
+  // check new password must be diffrante from old one
+  if(oldPassword === newPassword){
+    throw new ApiError(403,"Password must be diffrante from old one!");
+  };
+
+  // find user by userId + password
+  const user = await AuthUser.findOne(userId).select("+password");
+  if(!user) throw new ApiError(409,"User not existed!");
+
+  // compare password 
+  const matchOldPassword = await user.isPasswordCorrect(oldPassword);
+  if(!matchOldPassword) throw new ApiError(404,"Incorrect old password!");
+
+  // change old password to new
+  user.password = newPassword; 
+
+  // update time of password change 
+  user.passwordChangedAt = new Date();
+ 
+  // update refresh token version 
+  user.refreshTokenVersion += 1;
+
+  // save user 
+  await user.save();
 
 };
+
 export {
      registerUserService,
      loginUserService,
