@@ -110,9 +110,22 @@ const refreshAccessTokenService = async (incomingRefreshToken) => {
   return { accessToken, refreshToken };
 };
 
+// CHANGE PASSWORD SERVICE--------------
+const changePasswordService = async (oldPassword,newPassword)=>{
+  // check fields are not empty 
+  // check new password must be diffrante from old one
+  // find user by userId + password
+  // compare password 
+  // check old password to new 
+  // update time of password change 
+  // save user 
+
+
+};
 export {
      registerUserService,
      loginUserService,
      logoutUserService,
-     refreshAccessTokenService
+     refreshAccessTokenService,
+     changePasswordService
  }
