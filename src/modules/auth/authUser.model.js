@@ -20,6 +20,10 @@ const authUserSchema = new mongoose.Schema({
         select:false
     },
 
+    passwordChangedAt:{
+        type:Date
+    },
+
     isVarified:{
         type:Boolean,
         default:false
