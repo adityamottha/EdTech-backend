@@ -1,6 +1,6 @@
 import { ApiResponse } from "../../utils/ApiResponse.js"
 import { AsyncHandler } from "../../utils/AsyncHandler.js";
-import { loginUserService, logoutUserService, registerUserService, refreshAccessTokenService } from "./authUser.service.js";
+import { loginUserService, logoutUserService, registerUserService, refreshAccessTokenService, changePasswordService } from "./authUser.service.js";
 
 const registerUserController = AsyncHandler(async (req,res)=>{
     // get a data from req.body
@@ -108,8 +108,20 @@ const refreshAccessTokenController = AsyncHandler(async (req, res) => {
 // CHANGE PASSWORD CONTROLLER -------------------------------
 const changePasswordController = AsyncHandler(async (req,res)=>{
     // get data from req.body
+    const userId = req.user._id;
+    const {oldPassword, newPassword} = req.body
+
     // call service function
+    const user = await changePasswordService({
+        userId,
+        oldPassword,
+        newPassword
+    });
+
     // send response
+    return res.status(200).json(
+        new ApiResponse(200,user,"Password has been changed!")
+    );
 })
 export { 
     registerUserController,
