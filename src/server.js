@@ -1,6 +1,9 @@
 import { connectDb } from "./db/dbConnection.js";
 import { app } from "./app.js";
 import dotenv from "dotenv";
+import crypto from "crypto";
+
+globalThis.crypto = crypto;
 
 dotenv.config(
     {
