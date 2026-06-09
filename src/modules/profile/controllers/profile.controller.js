@@ -13,6 +13,7 @@ const profileController = AsyncHandler(async (req,res)=>{
     // find avatar from files 
     const avatar = req.files?.avatar?.[0]?.path;
 
+    // console.log("AVATAR", avatar);
     //address and social-links find and convert to json
     const address = req.body.address? JSON.parse(req.body.address) : null;
     const socialLinks = req.body.socialLinks? JSON.parse(req.body.socialLinks) : null;

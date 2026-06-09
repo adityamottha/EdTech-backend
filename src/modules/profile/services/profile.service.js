@@ -31,8 +31,8 @@ const profileService = async ({
 
     if(!address) throw new ApiError(400,"address is required!");
 
-    if(!timezone?.trim()) throw new ApiError(400,"timezone is required!");
-    if(!socialLinks) throw new ApiError(400,"Social links are required!")
+    // if(!timezone?.trim()) throw new ApiError(400,"timezone is required!");
+    // if(!socialLinks) throw new ApiError(400,"Social links are required!")
     
     // find profile 
     const existedPofile = await Profile.findOne({userId});

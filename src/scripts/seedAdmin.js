@@ -3,8 +3,8 @@ dotenv.config();
 
 // console.log("MONGODB_URI: ",process.env.MONGODB_URI); 
 import { connectDb } from "../db/dbConnection.js";
-import { AuthUser } from "../modules/userAuth/authUser.model.js";
-import { Profile } from "../modules/userProfile/models/profile.model.js";
+import { AuthUser } from "../modules/auth/authUser.model.js";
+import { Profile } from "../modules/profile/models/profile.model.js";
 
 
 const seedAdmin = async ()=>{
@@ -28,7 +28,9 @@ const seedAdmin = async ()=>{
             password:process.env.ADMIN_PASSWORD,
             role:"Admin",
             phoneNumber:process.env.ADMIN_PHONE_NUMBER,
-            refreshTokenVersion:0
+            refreshTokenVersion:0,
+            approvalStatus:"Approved",
+            createdBy:"SYSTEM"
         });
 
         if(admin){

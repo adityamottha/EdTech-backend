@@ -122,7 +122,7 @@ const authUserSchema = new mongoose.Schema({
 
      createdBy: {
       type: String,
-      enum: ["SELF", "ADMIN"],
+      enum: ["SELF", "ADMIN", "SYSTEM"],
       default: "SELF",
     },
     
