@@ -1,6 +1,6 @@
 import { ApiError } from "../utils/ApiError.js";
 
-const authorizeRole = (role) =>{
+const authorizeRole = (...role) =>{
     return (req,res,next) =>{
 
         // check user.role is existed in req if not throw error
