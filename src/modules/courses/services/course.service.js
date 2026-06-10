@@ -14,6 +14,9 @@ const createCourseService = async (
       instructorId
     ) =>{
 
+            // console.log ("DESCRIPTION :", description)
+            // console.log ("TITLE :", title)
+
         // All data is required
        if (!title) throw new ApiError(400, "Title is required!");
        if (!description) throw new ApiError(400, "Description is required!");
@@ -24,8 +27,13 @@ const createCourseService = async (
        if (!language) throw new ApiError(400, "Language is required!");
 
        // upload thumbnail on cloudinary 
-
+       console.log("THUMBNAIL PATH:", thumbnail);
+console.log("TYPE:", typeof thumbnail);
+       
        const uploadThumbnail = await uploadFileOnCloudinary(thumbnail);
+    //    console.log("THUMBNAIL_SECURE_URL :" ,!uploadThumbnail?.secure_url );
+    //    console.log("THUMBNAIL :" ,!uploadThumbnail?.secure_url );
+       
        if(!uploadThumbnail?.secure_url) throw new ApiError(500,"Thumbail failed to upload!")
 
         // find instructor 
