@@ -32,6 +32,10 @@ app.use("/api/v1/teacher",teacher);
 import admin from "./modules/admin/admin.routes.js";
 app.use("/api/v1/admin",admin)
 
+// COURSE-ROUTER
+import course from "./modules/courses/routes/course.route.js"
+app.use("/api/v1/course",course)
+
 // ERROR MIDDLEWARE--------------------------------
 import { errorMiddleware } from "./middlewares/error.middleware.js";
 app.use(errorMiddleware);
