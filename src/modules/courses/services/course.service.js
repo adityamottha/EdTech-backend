@@ -1,6 +1,7 @@
 import { Course } from "../models/course.model.js";
 import { ApiError } from "../../../utils/ApiError.js"
 import { AuthUser } from "../../auth/authUser.model.js"
+import { uploadFileOnCloudinary } from "../../../utils/cloudinary.js";
 
 const createCourseService = async (
       title,
@@ -22,6 +23,10 @@ const createCourseService = async (
        if (!level) throw new ApiError(400, "Level is required!");
        if (!language) throw new ApiError(400, "Language is required!");
 
+       // upload thumbnail on cloudinary 
+
+       const uploadThumbnail = await uploadFileOnCloudinary(thumbnail);
+       if(!uploadThumbnail?.secure_url) throw new ApiError(500,"Thumbail failed to upload!")
 
         // find instructor 
         const instructor = await AuthUser.findById(instructorId);
@@ -31,7 +36,7 @@ const createCourseService = async (
         const createCourse = await Course.create({
             title,
             description,
-            thumbnail,
+            thumbnail:uploadThumbnail.secure_url,
             price,
             level,
             title,
