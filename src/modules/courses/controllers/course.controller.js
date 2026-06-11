@@ -13,6 +13,7 @@ const createCourseController = AsyncHandler(async (req,res)=>{
       duration,
       level,
       language,
+      isPublished
     } = req.body
      
     // console.log("req.files:", req.files);
@@ -32,7 +33,8 @@ const createCourseController = AsyncHandler(async (req,res)=>{
       duration,
       level,
       language,
-      instructorId
+      instructorId,
+      isPublished
     );
 
     return res.status(200).json(

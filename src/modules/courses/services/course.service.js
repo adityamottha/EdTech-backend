@@ -11,7 +11,8 @@ const createCourseService = async (
     duration,
     level,
     language,
-    instructorId
+    instructorId,
+    isPublished
 ) => {
     // All data is required
     if (!title) throw new ApiError(400, "Title is required!");
@@ -21,6 +22,7 @@ const createCourseService = async (
     if (!duration) throw new ApiError(400, "Duration is required!");
     if (!level) throw new ApiError(400, "Level is required!");
     if (!language) throw new ApiError(400, "Language is required!");
+    if(!isPublished) throw new ApiError(400,"isPublished is required!")
 
     // upload thumbnail on cloudinary 
     const uploadThumbnail = await uploadFileOnCloudinary(thumbnail);
@@ -42,7 +44,8 @@ const createCourseService = async (
         duration,
         level,
         language,
-        instructor: instructorId
+        instructor: instructorId,
+        isPublished
     }); 
 
     return createCourse;
