@@ -1,5 +1,5 @@
 import { ApiResponse } from "../../../utils/ApiResponse.js"
-import { createCourseService, getAllPublicCourseService } from "../services/course.service.js"
+import { createCourseService, getAllDraftCourses, getAllPublicCourseService } from "../services/course.service.js"
 import { AsyncHandler } from "../../../utils/AsyncHandler.js"
 
 
@@ -55,10 +55,22 @@ const getAllPublicCoursController = AsyncHandler(async (req,res)=>{
       "Fetched all published courses"
     )
   );
+});
+
+const getAllDraftCoursController = AsyncHandler(async (req,res) =>{
+  // call the service function 
+  const draftCourses = await getAllDraftCourses();
+
+  // return response 
+  return res.status(200).json(
+    new ApiResponse(200,draftCourses,"Fetched all draft courses !")
+  );
+
 })
 
 
 export { 
   createCourseController,
-  getAllPublicCoursController
+  getAllPublicCoursController,
+  getAllDraftCoursController
 }
