@@ -48,4 +48,17 @@ const createCourseService = async (
     return createCourse;
 }
 
+
+const getAllPublicCourseService = async ()=>{
+    // find course and return
+    const courses = await Course.find({isPublished:true})
+    if(!courses){
+        throw new ApiError(404,"There is no published Course available!");
+    };
+
+    // return
+    return courses;
+
+}
+
 export { createCourseService }
