@@ -15,10 +15,11 @@ const createCourseController = AsyncHandler(async (req,res)=>{
       language,
     } = req.body
      
+    // console.log("req.files:", req.files);
+    // console.log("req.body:", req.body);
+
     // get thumbail from file 
     const thumbnail = req.files?.thumbnail?.[0]?.path;
-
-    console.log("THUMBNAIL :", thumbnail);
     
     // get userId from auth middleware
     const instructorId = req.user?._id;

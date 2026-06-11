@@ -11,13 +11,12 @@ cloudinary.config({
     api_secret:process.env.CLOUDINARY_API_SECRET
 });
 
-// console.log(process.env.CLOUDINARY_CLOUD_NAME);
-// console.log(process.env.CLOUDINARY_API_KEY);
+// console.log("Cloud Name:", process.env.CLOUDINARY_CLOUD_NAME);
+// console.log("API Key exists:", !!process.env.CLOUDINARY_API_KEY);
+// console.log("API Secret exists:", !!process.env.CLOUDINARY_API_SECRET);
 
-console.log("API_KEY :- ", process.env.CLOUDINARY_CLOUD_NAME)
 const uploadFileOnCloudinary = async (localFilePath)=>{
     try {
-        console.log("FILE RECEIVED:", localFilePath);
         if(!localFilePath) return null;
 
         const response = await cloudinary.uploader.upload(localFilePath,{
