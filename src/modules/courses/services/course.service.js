@@ -46,8 +46,8 @@ console.log("TYPE:", typeof thumbnail);
             description,
             thumbnail:uploadThumbnail.secure_url,
             price,
+            duration,
             level,
-            title,
             language,
             instructor:instructorId
         }); 
