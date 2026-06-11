@@ -67,7 +67,23 @@ const getAllPublicCourseService = async () => {
   return courses;
 };
 
+// ===========================ALL DRAFT COURSES====================
+const getAllDraftCourses = async ()=>{
+    // find courses that are not public
+    const draftCourses = await Course.find({isPublished:false});
+
+    // check if draft course available
+    if(draftCourses.length == 0){
+        throw new ApiError(404,"There are no Draft courses available!")
+    };
+
+    // return
+    return draftCourses;
+
+};
+
 export { 
     createCourseService,
-    getAllPublicCourseService
+    getAllPublicCourseService,
+    getAllDraftCourses
  }
