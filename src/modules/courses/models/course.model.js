@@ -77,6 +77,6 @@ const courseSchema = new Schema({
       type: Boolean,
       default: false,
     },
-},{timstamps:true});
+},{timestamps:true});
 
 export const Course = model("Course",courseSchema)
