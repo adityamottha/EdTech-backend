@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { verifyJWT } from "../../../middlewares/verifyJWT.middleware.js";
 import { authorizeRole } from "../../../middlewares/authorizeRole.middleware.js";
-import { createCourseController, getAllPublicCoursController } from "../controllers/course.controller.js";
+import { createCourseController, getAllDraftCoursController, getAllPublicCoursController } from "../controllers/course.controller.js";
 import { upload } from "../../../middlewares/multer.middleware.js";
 
 const router = Router();
@@ -24,5 +24,12 @@ router.route("/all-published-courses").get(
     verifyJWT,
     authorizeRole("Student","Teacher","Admin"),
     getAllPublicCoursController
-)
+);
+
+router.route("/all-draft-courses").get(
+    verifyJWT,
+    authorizeRole("Teacher","Admin"),
+    getAllDraftCoursController
+);
+
 export default router
