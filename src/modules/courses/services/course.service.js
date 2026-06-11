@@ -49,6 +49,8 @@ const createCourseService = async (
 }
 
 
+// ===================GET ALL PUBLISHED COURSE=================
+
 const getAllPublicCourseService = async ()=>{
     // find course and return
     const courses = await Course.find({isPublished:true})
@@ -61,4 +63,7 @@ const getAllPublicCourseService = async ()=>{
 
 }
 
-export { createCourseService }
+export { 
+    createCourseService,
+    getAllPublicCourseService
+ }
