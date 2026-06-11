@@ -41,8 +41,8 @@ const createCourseController = AsyncHandler(async (req,res)=>{
 });
 
 // ====================GET ALL PUBLISHED COURSE
-const getAllPublicCoursController = async () =>{
-  // call the service function 
+const getAllPublicCoursController = AsyncHandler(async (req,res)=>{
+   // call the service function 
   const publishedCourses = await getAllPublicCourseService();
 
   // send response 
@@ -53,7 +53,8 @@ const getAllPublicCoursController = async () =>{
       "Fetched all published courses"
     )
   );
-};
+})
+
 
 export { 
   createCourseController,
