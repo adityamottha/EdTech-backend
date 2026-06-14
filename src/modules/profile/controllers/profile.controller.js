@@ -1,6 +1,6 @@
 import { AsyncHandler } from "../../../utils/AsyncHandler.js";
 import { ApiResponse } from "../../../utils/ApiResponse.js"
-import { profileService, updateProfileService } from "../services/profile.service.js";
+import { getProfileService, profileService, updateProfileService } from "../services/profile.service.js";
 import { ApiError } from "../../../utils/ApiError.js";
 
 const profileController = AsyncHandler(async (req,res)=>{
@@ -36,7 +36,21 @@ const profileController = AsyncHandler(async (req,res)=>{
     )
 });
 
-// ================== UPDATE PROFILE CONTROLLER
+// ================== GET PROFILE CONTROLLER =================
+const getProfileController = AsyncHandler(async (req,res)=>{
+    // get userId from req.user
+    const userId = req.user?._id
+
+    // call service funtion and pass userId
+    const profile = await getProfileService(userId);
+
+    // send response
+    return res.status(200).json(
+        new ApiResponse(200,profile,"fetched profile successfully")
+    );
+});
+
+// ================== UPDATE PROFILE CONTROLLER===============
 const updateProfileController = AsyncHandler(async (req,res)=>{
 
     //get userId from req.user
@@ -57,5 +71,6 @@ const updateProfileController = AsyncHandler(async (req,res)=>{
 
 export { 
     profileController,
+    getProfileController,
     updateProfileController
 }
