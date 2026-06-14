@@ -69,6 +69,33 @@ const profileService = async ({
  
  // return
  return profile;
+};
+
+
+// ====================== UPDATE PROFILE SERVICE ======================
+
+const updateProfileService = async (userId,data)=>{
+    // check all fields are required
+    if(!userId){
+        throw new ApiError(400,"userId is required");
+    };
+
+    if(!data.trim()){
+        throw new ApiError(400,"Data is required!");
+    };
+
+    // find and update through set 
+    const profile = await Profile.findOneAndUpdate(
+        {userId},
+        {$set:data},
+        {new:true},
+    );
+
+    // return profile 
+    return profile
 }
 
-export { profileService }
+export {
+ profileService,
+ updateProfileService
+}

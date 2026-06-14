@@ -26,6 +26,8 @@ router.route("/all-published-courses").get(
     getAllPublicCoursController
 );
 
+// ====================== GET ALL DRAFT COURSE ROUTER
+
 router.route("/all-draft-courses").get(
     verifyJWT,
     authorizeRole("Teacher","Admin"),
