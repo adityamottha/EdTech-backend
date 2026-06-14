@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { profileController } from "./controllers/profile.controller.js"
+import { profileController, updateProfileController } from "./controllers/profile.controller.js"
 import { verifyJWT } from "../../middlewares/verifyJWT.middleware.js";
 import { upload } from "../../middlewares/multer.middleware.js";
 
@@ -14,5 +14,8 @@ router.route("/common-profile").post(
         }
     ]),
     profileController)
+
+    // ================UPDATE PROFILE ROUTER 
+    router.patch("/update-profile",verifyJWT,updateProfileController)
 
 export default router;
