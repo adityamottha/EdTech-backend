@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { profileController, updateProfileController } from "./controllers/profile.controller.js"
+import { getProfileController, profileController, updateProfileController } from "./controllers/profile.controller.js"
 import { verifyJWT } from "../../middlewares/verifyJWT.middleware.js";
 import { upload } from "../../middlewares/multer.middleware.js";
 
@@ -13,9 +13,12 @@ router.route("/common-profile").post(
             maxCount:1
         }
     ]),
-    profileController)
+    profileController);
 
-    // ================UPDATE PROFILE ROUTER 
-    router.patch("/update-profile",verifyJWT,updateProfileController)
+    // ===============GET PROFILE ROUTER============
+    router.get("/get-common-profile",verifyJWT,getProfileController)
+
+    // ================UPDATE PROFILE ROUTER ==========
+    router.patch("/update-common-profile",verifyJWT,updateProfileController)
 
 export default router;

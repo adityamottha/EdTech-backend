@@ -42,7 +42,7 @@ const getProfileController = AsyncHandler(async (req,res)=>{
     const userId = req.user?._id
 
     // call service funtion and pass userId
-    const profile = await getProfileService(userId);
+    const profile = await getProfileService({userId});
 
     // send response
     return res.status(200).json(
@@ -57,14 +57,14 @@ const updateProfileController = AsyncHandler(async (req,res)=>{
     const userId = req.user?._id;
 
     // get data from req.body
-    const {data} = req.body;
+    const data = req.body;
 
     // call service function pass parameter
     const profile = await updateProfileService(userId,data);
 
     // send response 
     return res.status(200).json(
-        new ApiResponse(200,profile,`${data} updated successfully!`)
+        new ApiResponse(200,profile,"Profile updated successfully")
     );
 
 });

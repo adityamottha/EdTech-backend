@@ -73,10 +73,10 @@ const profileService = async ({
 
 // ===========================GET PROFILE=============================
 
-const getProfileService = async (userId)=>{
+const getProfileService = async ({userId})=>{
 
 // find the profile through userId
-const profile = await Profile.findById(userId);
+const profile = await Profile.findOne({userId});
 
 // check profile is available
 if(!profile){
@@ -97,7 +97,7 @@ const updateProfileService = async (userId,data)=>{
         throw new ApiError(400,"userId is required");
     };
 
-    if(!data.trim()){
+    if(!data){
         throw new ApiError(400,"Data is required!");
     };
 
