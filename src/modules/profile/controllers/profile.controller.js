@@ -1,6 +1,6 @@
 import { AsyncHandler } from "../../../utils/AsyncHandler.js";
 import { ApiResponse } from "../../../utils/ApiResponse.js"
-import { profileService } from "../services/profile.service.js";
+import { profileService, updateProfileService } from "../services/profile.service.js";
 import { ApiError } from "../../../utils/ApiError.js";
 
 const profileController = AsyncHandler(async (req,res)=>{
@@ -36,4 +36,26 @@ const profileController = AsyncHandler(async (req,res)=>{
     )
 });
 
-export { profileController }
+// ================== UPDATE PROFILE CONTROLLER
+const updateProfileController = AsyncHandler(async (req,res)=>{
+
+    //get userId from req.user
+    const userId = req.user?._id;
+
+    // get data from req.body
+    const {data} = req.body;
+
+    // call service function pass parameter
+    const profile = await updateProfileService(userId,data);
+
+    // send response 
+    return res.status(200).json(
+        new ApiResponse(200,profile,`${data} updated successfully!`)
+    );
+
+});
+
+export { 
+    profileController,
+    updateProfileController
+}
