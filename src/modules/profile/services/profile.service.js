@@ -71,6 +71,23 @@ const profileService = async ({
  return profile;
 };
 
+// ===========================GET PROFILE=============================
+
+const getProfileService = async (userId)=>{
+
+// find the profile through userId
+const profile = await Profile.findById(userId);
+
+// check profile is available
+if(!profile){
+    throw new ApiError(408,"Profile not found!");
+};
+
+// return profile 
+return profile;
+
+}
+
 
 // ====================== UPDATE PROFILE SERVICE ======================
 
@@ -97,5 +114,6 @@ const updateProfileService = async (userId,data)=>{
 
 export {
  profileService,
- updateProfileService
+ updateProfileService,
+ getProfileService
 }
