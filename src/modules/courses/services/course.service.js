@@ -2,6 +2,7 @@ import { Course } from "../models/course.model.js";
 import { ApiError } from "../../../utils/ApiError.js"
 import { AuthUser } from "../../auth/authUser.model.js"
 import { uploadFileOnCloudinary } from "../../../utils/cloudinary.js";
+import { application } from "express";
 
 const createCourseService = async (
     title,
@@ -123,6 +124,37 @@ const updateCourseService = async (courseId,data) =>{
     // return
     return course
 
+}
+
+// ==========================UPDATE THUMBNAIL ==========================
+const updateThumbnail = async (courseId , newThumbnail) =>{
+  // check both are available 
+  if(!courseId){
+    throw new ApiError(400,"courseId is required!")
+  }
+
+  if(!newThumbnail){
+    throw new ApiError(400,"newThumbnail is required!")
+  };
+
+  // upload thumbnail on cloudinary 
+  const thumbail = await uploadFileOnCloudinary(newThumbnail);
+  if(!thumbail?.secure_url){
+    throw new application(500,"newThumbnail failed to upload on cloudiary!");
+  };
+
+  // find and update thmbnail
+  const updateThumbnail = await Course.findByIdAndUpdate(
+    courseId,
+    thumbail,
+    {
+        new:true,
+        runValidators:true
+    }
+  );
+
+//   return 
+  return updateThumbnail
 }
 
 export { 
