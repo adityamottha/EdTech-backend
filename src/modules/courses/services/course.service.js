@@ -209,11 +209,31 @@ const deleteCourseService = async (courseId) =>{
 
 }
 
+// ============================== GET DELETED COURSE =========================
+const getDetetedCourseService = async ()=>{
+
+  // find course by isDeleted field 
+  const deletedCourse = await Course.findOne({isDeleted:true});
+
+  // throw is deleted course are not available
+  if(!deletedCourse){
+    throw new ApiError(
+      404,
+      "Deleted courses are not found!"
+    )
+  };
+
+  // return 
+  return deletedCourse;
+
+}
+
 export { 
     createCourseService,
     getAllPublicCourseService,
     getAllDraftCourses,
     updateCourseService,
     updateThumbnailService,
-    deleteCourseService
+    deleteCourseService,
+    getDetetedCourseService
  }

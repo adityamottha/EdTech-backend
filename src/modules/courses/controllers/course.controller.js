@@ -1,7 +1,6 @@
 import { ApiResponse } from "../../../utils/ApiResponse.js"
-import { createCourseService, deleteCourseService, getAllDraftCourses, getAllPublicCourseService, updateCourseService, updateThumbnailService } from "../services/course.service.js"
+import { createCourseService, deleteCourseService, getAllDraftCourses, getAllPublicCourseService, getDetetedCourseService, updateCourseService, updateThumbnailService } from "../services/course.service.js"
 import { AsyncHandler } from "../../../utils/AsyncHandler.js"
-import { Course } from "../models/course.model.js";
 import { ApiError } from "../../../utils/ApiError.js";
 
 
@@ -136,24 +135,22 @@ const deleteCourseController = AsyncHandler(async (req,res)=>{
   )
 });
 
-// ============================== GET DELETED COURSE =========================
-const getDetetedCourseService = async ()=>{
+// =================== GET DELETED COURSE ==========================
 
-  // find course by isDeleted field 
-  const deletedCourse = await Course.findOne({isDeleted:true});
+const getDetetedCourseController = AsyncHandler(async (req,res)=>{
 
-  // throw is deleted course are not available
-  if(!deletedCourse){
-    throw new ApiError(
-      404,
-      "Deleted courses are not found!"
+  // call service function and pass parameters
+  const getDeleted = await getDetetedCourseService();
+
+  // response 
+  return res.status(200).json(
+    new ApiResponse(
+      200,
+      getDeleted,
+      "All deleted courses Fetched!"
     )
-  };
-
-  // return 
-  return deletedCourse;
-
-}
+  )
+})
 
 export { 
   createCourseController,
@@ -162,5 +159,5 @@ export {
   updateCourseController,
   updateThumbnailController,
   deleteCourseController,
-  getDetetedCourseService,
+  getDetetedCourseController,
 }
