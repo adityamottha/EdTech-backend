@@ -188,6 +188,9 @@ const deleteCourseService = async (courseId) =>{
     const deleted = await Course.findByIdAndUpdate(
         courseId,
         {
+            isDeleted:true
+        },
+        {
             new:true,
             isValidators:true
         }

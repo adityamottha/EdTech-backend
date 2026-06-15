@@ -126,9 +126,11 @@ const deleteCourseController = AsyncHandler(async (req,res)=>{
 
   // response 
   return res.status(200).json(
+    new ApiResponse(
     200,
     isDeleted,
     "Course moved to trash!"
+    )
   )
 }) 
 

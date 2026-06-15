@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { verifyJWT } from "../../../middlewares/verifyJWT.middleware.js";
 import { authorizeRole } from "../../../middlewares/authorizeRole.middleware.js";
-import { createCourseController, getAllDraftCoursController, getAllPublicCoursController, updateCourseController, updateThumbnailController } from "../controllers/course.controller.js";
+import { createCourseController, deleteCourseController, getAllDraftCoursController, getAllPublicCoursController, updateCourseController, updateThumbnailController } from "../controllers/course.controller.js";
 import { upload } from "../../../middlewares/multer.middleware.js";
 
 const router = Router();
@@ -52,6 +52,13 @@ router.route("/update-thumbnail/:courseId").patch(
    ]),
     authorizeRole("Teacher","Admin"),
     updateThumbnailController
+);
+
+// ====================DELETE COURSE=====================
+router.route("/delete-course/:courseId").delete(
+    verifyJWT,
+    authorizeRole("Teacher","Admin"),
+    deleteCourseController
 );
 
 export default router
