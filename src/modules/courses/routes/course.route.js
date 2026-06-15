@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { verifyJWT } from "../../../middlewares/verifyJWT.middleware.js";
 import { authorizeRole } from "../../../middlewares/authorizeRole.middleware.js";
-import { createCourseController, getAllDraftCoursController, getAllPublicCoursController, updateCourseController } from "../controllers/course.controller.js";
+import { createCourseController, getAllDraftCoursController, getAllPublicCoursController, updateCourseController, updateThumbnailController } from "../controllers/course.controller.js";
 import { upload } from "../../../middlewares/multer.middleware.js";
 
 const router = Router();
@@ -40,6 +40,18 @@ router.route("/update-course/:courseId").patch(
     verifyJWT,
     authorizeRole("Teacher","Admin"),
     updateCourseController
+);
+
+router.route("/update-thumbnail/:courseId").patch(
+    verifyJWT,
+    upload.fields([
+        {
+            name:"thumbnail",
+            maxCount:1
+        }
+   ]),
+    authorizeRole("Teacher","Admin"),
+    updateThumbnailController
 );
 
 export default router

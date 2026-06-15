@@ -96,7 +96,9 @@ const updateThumbnailController = AsyncHandler(async (req,res)=>{
   const { courseId } = req.params
 
   // get thumbnail from req.body
-  const thumbnail = req.body.thumbnail
+  const thumbnail = req.files?.thumbnail?.[0]?.path
+  console.log("THUMBNAIL",thumbnail);
+  
 
   // call service function and pass parameters
   const updateThumbnail = await updateThumbnailService(courseId,thumbnail);
@@ -109,7 +111,7 @@ const updateThumbnailController = AsyncHandler(async (req,res)=>{
       "Thumbnail updated succesfully!"
     )
   )
-  
+
 })
 
 export { 

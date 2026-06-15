@@ -2,7 +2,7 @@ import { Course } from "../models/course.model.js";
 import { ApiError } from "../../../utils/ApiError.js"
 import { AuthUser } from "../../auth/authUser.model.js"
 import { uploadFileOnCloudinary } from "../../../utils/cloudinary.js";
-import { application } from "express";
+// import { application } from "express";
 
 const createCourseService = async (
     title,
@@ -138,28 +138,40 @@ const updateThumbnailService = async (courseId , newThumbnail) =>{
   };
 
   // upload thumbnail on cloudinary 
-  const thumbail = await uploadFileOnCloudinary(newThumbnail);
-  if(!thumbail?.secure_url){
-    throw new application(500,"newThumbnail failed to upload on cloudiary!");
+  const uploadThumbnail = await uploadFileOnCloudinary(newThumbnail);
+  if(!uploadThumbnail?.secure_url){
+    throw new ApiError(500,"newThumbnail failed to upload on cloudiary!");
   };
 
   // find and update thmbnail
-  const updateThumbnail = await Course.findByIdAndUpdate(
+  const thumbnail = await Course.findByIdAndUpdate(
     courseId,
-    thumbail.secure_url,
+     {
+        thumbnail: uploadThumbnail.secure_url
+    },
     {
         new:true,
         runValidators:true
     }
   );
 
+  // check course available
+
+  if(!thumbnail){
+    throw new ApiError(
+        404,
+        "Course not found!"
+    )
+  }
+
 //   return 
-  return updateThumbnail
+  return thumbnail;
 }
 
 export { 
     createCourseService,
     getAllPublicCourseService,
     getAllDraftCourses,
+    updateCourseService,
     updateThumbnailService
  }
