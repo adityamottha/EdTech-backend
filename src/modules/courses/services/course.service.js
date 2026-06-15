@@ -2,7 +2,6 @@ import { Course } from "../models/course.model.js";
 import { ApiError } from "../../../utils/ApiError.js"
 import { AuthUser } from "../../auth/authUser.model.js"
 import { uploadFileOnCloudinary } from "../../../utils/cloudinary.js";
-import { threadCpuUsage } from "process";
 
 const createCourseService = async (
     title,
@@ -88,7 +87,7 @@ const getAllDraftCourses = async ()=>{
 const updateCourseService = async (courseId,data) =>{
 
     // check userId
-    if(!userId) {
+    if(!courseId) {
         throw new ApiError(
             400,
             "UserId is required!"
@@ -104,7 +103,14 @@ const updateCourseService = async (courseId,data) =>{
     }
 
     // find and update by courseId
-    const course = await Course.findByIdAndUpdate(courseId);
+    const course = await Course.findByIdAndUpdate(
+        courseId,
+        data,
+       { 
+        new: true,
+        runValidators: true
+       }
+    );
 
     //check course available from given id
     if(!course){

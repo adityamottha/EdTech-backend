@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { verifyJWT } from "../../../middlewares/verifyJWT.middleware.js";
 import { authorizeRole } from "../../../middlewares/authorizeRole.middleware.js";
-import { createCourseController, getAllDraftCoursController, getAllPublicCoursController } from "../controllers/course.controller.js";
+import { createCourseController, getAllDraftCoursController, getAllPublicCoursController, updateCourseController } from "../controllers/course.controller.js";
 import { upload } from "../../../middlewares/multer.middleware.js";
 
 const router = Router();
@@ -26,12 +26,20 @@ router.route("/all-published-courses").get(
     getAllPublicCoursController
 );
 
-// ====================== GET ALL DRAFT COURSE ROUTER
+// ====================== GET ALL DRAFT COURSE ROUTER =======================
 
 router.route("/all-draft-courses").get(
     verifyJWT,
     authorizeRole("Teacher","Admin"),
     getAllDraftCoursController
+);
+
+// ===================== UPDATE COURSE ROUTER=========================
+
+router.route("/update-course/:courseId").patch(
+    verifyJWT,
+    authorizeRole("Teacher","Admin"),
+    updateCourseController
 );
 
 export default router

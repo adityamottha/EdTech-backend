@@ -72,7 +72,7 @@ const getAllDraftCoursController = AsyncHandler(async (req,res) =>{
 const updateCourseController = AsyncHandler(async (req,res) =>{
 
   // get courseId from params
-  const courseId = req.params
+  const {courseId} = req.params
 
   // get data from req.body 
   const data = req.body
