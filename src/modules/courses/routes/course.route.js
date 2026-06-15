@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { verifyJWT } from "../../../middlewares/verifyJWT.middleware.js";
 import { authorizeRole } from "../../../middlewares/authorizeRole.middleware.js";
-import { createCourseController, deleteCourseController, getAllDraftCoursController, getAllPublicCoursController, getDetetedCourseController, updateCourseController, updateThumbnailController } from "../controllers/course.controller.js";
+import { createCourseController, deleteCourseController, getAllDraftCoursController, getAllPublicCoursController, getDetetedCourseController, restoreDeletedCourseController, updateCourseController, updateThumbnailController } from "../controllers/course.controller.js";
 import { upload } from "../../../middlewares/multer.middleware.js";
 
 const router = Router();
@@ -66,6 +66,13 @@ router.route("/all-deleted-courses").get(
     verifyJWT,
     authorizeRole("Teacher","Admin","Student"),
     getDetetedCourseController
-)
+);
+
+// ================== RESTORE DELETED COURSE========================
+router.route("/restore-deleted-courses/:courseId").patch(
+    verifyJWT,
+    authorizeRole("Teacher","Admin"),
+    restoreDeletedCourseController
+);
 
 export default router

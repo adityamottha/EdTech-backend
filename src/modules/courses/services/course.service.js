@@ -248,7 +248,7 @@ const restoreDeletedCourseService = async (courseId) =>{
         },
         {
             new:true,
-            isValidators:true
+            runValidators:true
         }
     );
 

@@ -156,7 +156,7 @@ const getDetetedCourseController = AsyncHandler(async (req,res)=>{
 const restoreDeletedCourseController = AsyncHandler(async (req,res)=>{
 
   // get courseId to params
-  const courseId = req.params;
+  const {courseId} = req.params;
 
   // call service function and pass parameters
   const restore = await restoreDeletedCourseService(courseId)
