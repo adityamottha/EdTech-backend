@@ -1,5 +1,5 @@
 import { ApiResponse } from "../../../utils/ApiResponse.js"
-import { createCourseService, getAllDraftCourses, getAllPublicCourseService, updateCourseService } from "../services/course.service.js"
+import { createCourseService, getAllDraftCourses, getAllPublicCourseService, updateCourseService, updateThumbnailService } from "../services/course.service.js"
 import { AsyncHandler } from "../../../utils/AsyncHandler.js"
 
 
@@ -90,10 +90,32 @@ const updateCourseController = AsyncHandler(async (req,res) =>{
   )
 });
 
+// ============================UPDATE THUMBNAIL CONTROLLER
+const updateThumbnailController = AsyncHandler(async (req,res)=>{
+  // find course id from params 
+  const { courseId } = req.params
+
+  // get thumbnail from req.body
+  const thumbnail = req.body.thumbnail
+
+  // call service function and pass parameters
+  const updateThumbnail = await updateThumbnailService(courseId,thumbnail);
+
+  // response 
+  return res.status(200).json(
+    new ApiResponse(
+      200,
+      updateThumbnail,
+      "Thumbnail updated succesfully!"
+    )
+  )
+  
+})
 
 export { 
   createCourseController,
   getAllPublicCoursController,
   getAllDraftCoursController,
-  updateCourseController
+  updateCourseController,
+  updateThumbnailController
 }

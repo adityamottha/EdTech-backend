@@ -127,7 +127,7 @@ const updateCourseService = async (courseId,data) =>{
 }
 
 // ==========================UPDATE THUMBNAIL ==========================
-const updateThumbnail = async (courseId , newThumbnail) =>{
+const updateThumbnailService = async (courseId , newThumbnail) =>{
   // check both are available 
   if(!courseId){
     throw new ApiError(400,"courseId is required!")
@@ -146,7 +146,7 @@ const updateThumbnail = async (courseId , newThumbnail) =>{
   // find and update thmbnail
   const updateThumbnail = await Course.findByIdAndUpdate(
     courseId,
-    thumbail,
+    thumbail.secure_url,
     {
         new:true,
         runValidators:true
@@ -161,5 +161,5 @@ export {
     createCourseService,
     getAllPublicCourseService,
     getAllDraftCourses,
-    updateCourseService
+    updateThumbnailService
  }
