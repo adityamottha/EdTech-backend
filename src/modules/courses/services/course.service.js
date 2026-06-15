@@ -228,6 +228,34 @@ const getDetetedCourseService = async ()=>{
 
 }
 
+// ======================== RESTORE DELETED COURSE ===================
+const restoreDeletedCourseService = async (courseId) =>{
+
+    // check courseId is required
+    if(!courseId){
+        throw new ApiError(
+            400,
+            "courseId is required!"
+        );
+    };
+
+    // find and update fields
+
+    const restore = await Course.findByIdAndUpdate(
+        courseId,
+        {
+            isDeleted:false
+        },
+        {
+            new:true,
+            isValidators:true
+        }
+    );
+
+    // return 
+    return restore;
+};
+
 export { 
     createCourseService,
     getAllPublicCourseService,
@@ -235,5 +263,6 @@ export {
     updateCourseService,
     updateThumbnailService,
     deleteCourseService,
-    getDetetedCourseService
+    getDetetedCourseService,
+    restoreDeletedCourseService
  }
