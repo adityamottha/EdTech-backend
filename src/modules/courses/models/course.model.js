@@ -73,6 +73,11 @@ const courseSchema = new Schema({
       default: "English",
     },
 
+    isDeleted: {
+      type: Boolean,
+      default:false
+    },
+    
     isPublished: {
       type: Boolean,
       default: false,

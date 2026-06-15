@@ -112,7 +112,12 @@ const updateThumbnailController = AsyncHandler(async (req,res)=>{
     )
   )
 
-})
+});
+
+
+// ================ DELETE COURSE ==============================
+
+const deleteCourseService = async () 
 
 export { 
   createCourseController,
