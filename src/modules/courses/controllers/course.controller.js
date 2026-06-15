@@ -1,5 +1,5 @@
 import { ApiResponse } from "../../../utils/ApiResponse.js"
-import { createCourseService, deleteCourseService, getAllDraftCourses, getAllPublicCourseService, getDetetedCourseService, updateCourseService, updateThumbnailService } from "../services/course.service.js"
+import { createCourseService, deleteCourseService, getAllDraftCourses, getAllPublicCourseService, getDetetedCourseService, restoreDeletedCourseService, updateCourseService, updateThumbnailService } from "../services/course.service.js"
 import { AsyncHandler } from "../../../utils/AsyncHandler.js"
 import { ApiError } from "../../../utils/ApiError.js";
 
@@ -152,6 +152,25 @@ const getDetetedCourseController = AsyncHandler(async (req,res)=>{
   )
 });
 
+// =========================== RESTORE DELETED COURSES ==================
+const restoreDeletedCourseController = AsyncHandler(async (req,res)=>{
+
+  // get courseId to params
+  const courseId = req.params;
+
+  // call service function and pass parameters
+  const restore = await restoreDeletedCourseService(courseId)
+
+  // return response 
+  return res.status(200).json(
+    new ApiResponse(
+      200,
+      restore,
+      "Restored deleted course"
+    )
+  )
+})
+
 export { 
   createCourseController,
   getAllPublicCoursController,
@@ -160,4 +179,5 @@ export {
   updateThumbnailController,
   deleteCourseController,
   getDetetedCourseController,
+  restoreDeletedCourseController
 }
