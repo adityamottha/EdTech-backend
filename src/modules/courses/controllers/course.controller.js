@@ -150,7 +150,7 @@ const getDetetedCourseController = AsyncHandler(async (req,res)=>{
       "All deleted courses Fetched!"
     )
   )
-})
+});
 
 export { 
   createCourseController,
