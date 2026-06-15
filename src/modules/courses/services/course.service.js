@@ -2,6 +2,7 @@ import { Course } from "../models/course.model.js";
 import { ApiError } from "../../../utils/ApiError.js"
 import { AuthUser } from "../../auth/authUser.model.js"
 import { uploadFileOnCloudinary } from "../../../utils/cloudinary.js";
+import { threadCpuUsage } from "process";
 
 const createCourseService = async (
     title,
@@ -82,8 +83,45 @@ const getAllDraftCourses = async ()=>{
 
 };
 
+
+// ===================== COURSE UPDATE ============================
+const updateCourseService = async (courseId,data) =>{
+
+    // check userId
+    if(!userId) {
+        throw new ApiError(
+            400,
+            "UserId is required!"
+        )
+    };
+
+    //check data
+    if(!data){
+        throw new ApiError(
+            400,
+            "Data is required!"
+        )
+    }
+
+    // find and update by courseId
+    const course = await Course.findByIdAndUpdate(courseId);
+
+    //check course available from given id
+    if(!course){
+        throw new ApiError(
+            404,
+            "Course not found!"
+        )
+    };
+
+    // return
+    return course
+
+}
+
 export { 
     createCourseService,
     getAllPublicCourseService,
-    getAllDraftCourses
+    getAllDraftCourses,
+    updateCourseService
  }
