@@ -56,7 +56,9 @@ const createCourseService = async (
 // ===================GET ALL PUBLISHED COURSE=================
 
 const getAllPublicCourseService = async () => {
-  const courses = await Course.find({ isPublished: true });
+  const courses = await Course.find({
+    $or:[{isPublished:true}, {isDeleted:false}]
+});
 
   if (courses.length === 0) {
     throw new ApiError(
@@ -71,7 +73,9 @@ const getAllPublicCourseService = async () => {
 // ===========================ALL DRAFT COURSES====================
 const getAllDraftCourses = async ()=>{
     // find courses that are not public
-    const draftCourses = await Course.find({isPublished:false});
+    const draftCourses = await Course.find({
+    $or:[{isPublished:true}, {isDeleted:false}]
+});
 
     // check if draft course available
     if(draftCourses.length == 0){
@@ -168,10 +172,45 @@ const updateThumbnailService = async (courseId , newThumbnail) =>{
   return thumbnail;
 }
 
+//====================== DELETE COURSE ================================
+
+const deleteCourseService = async (userId) =>{
+
+    // check user id is required
+    if(!userId){
+        throw new ApiError(
+            400,
+            "userId is required!"
+        )
+    };
+
+    // find and update isDeleted
+    const deleted = await Course.findByIdAndUpdate(
+        userId,
+        {
+            new:true,
+            isValidators:true
+        }
+    );
+
+    // check course is available
+    if(!deleted){
+        throw new ApiError(
+            404,
+            "Course not found!"
+        )
+    };
+
+    // returns
+    return deleted
+
+}
+
 export { 
     createCourseService,
     getAllPublicCourseService,
     getAllDraftCourses,
     updateCourseService,
-    updateThumbnailService
+    updateThumbnailService,
+    deleteCourseService
  }
