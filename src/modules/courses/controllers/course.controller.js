@@ -1,5 +1,5 @@
 import { ApiResponse } from "../../../utils/ApiResponse.js"
-import { createCourseService, getAllDraftCourses, getAllPublicCourseService } from "../services/course.service.js"
+import { createCourseService, getAllDraftCourses, getAllPublicCourseService, updateCourseService } from "../services/course.service.js"
 import { AsyncHandler } from "../../../utils/AsyncHandler.js"
 
 
@@ -66,11 +66,34 @@ const getAllDraftCoursController = AsyncHandler(async (req,res) =>{
     new ApiResponse(200,draftCourses,"Fetched all draft courses !")
   );
 
-})
+});
+
+// ========================== UPDATE COURSE CONTROLLER =================
+const updateCourseController = AsyncHandler(async (req,res) =>{
+
+  // get courseId from params
+  const courseId = req.params
+
+  // get data from req.body 
+  const data = req.body
+
+  // call service function and pass parameters 
+  const course = await updateCourseService(courseId,data);
+
+  // response 
+  return res.status(200).json(
+    new ApiResponse(
+      200,
+      course,
+      "Updated field of the course"
+    )
+  )
+});
 
 
 export { 
   createCourseController,
   getAllPublicCoursController,
-  getAllDraftCoursController
+  getAllDraftCoursController,
+  updateCourseController
 }
