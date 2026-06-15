@@ -1,5 +1,5 @@
 import { ApiResponse } from "../../../utils/ApiResponse.js"
-import { createCourseService, getAllDraftCourses, getAllPublicCourseService, updateCourseService, updateThumbnailService } from "../services/course.service.js"
+import { createCourseService, deleteCourseService, getAllDraftCourses, getAllPublicCourseService, updateCourseService, updateThumbnailService } from "../services/course.service.js"
 import { AsyncHandler } from "../../../utils/AsyncHandler.js"
 
 
@@ -117,12 +117,26 @@ const updateThumbnailController = AsyncHandler(async (req,res)=>{
 
 // ================ DELETE COURSE ==============================
 
-const deleteCourseService = async () 
+const deleteCourseController = AsyncHandler(async (req,res)=>{
+  // get courseId from params
+  const {courseId} = req.params;
+
+  // call service function and pass parameters
+  const isDeleted = await deleteCourseService(courseId);
+
+  // response 
+  return res.status(200).json(
+    200,
+    isDeleted,
+    "Course moved to trash!"
+  )
+}) 
 
 export { 
   createCourseController,
   getAllPublicCoursController,
   getAllDraftCoursController,
   updateCourseController,
-  updateThumbnailController
+  updateThumbnailController,
+  deleteCourseController
 }

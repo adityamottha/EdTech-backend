@@ -174,19 +174,19 @@ const updateThumbnailService = async (courseId , newThumbnail) =>{
 
 //====================== DELETE COURSE ================================
 
-const deleteCourseService = async (userId) =>{
+const deleteCourseService = async (courseId) =>{
 
-    // check user id is required
-    if(!userId){
+    // check courseId is required
+    if(!courseId){
         throw new ApiError(
             400,
-            "userId is required!"
+            "courseId is required!"
         )
     };
 
     // find and update isDeleted
     const deleted = await Course.findByIdAndUpdate(
-        userId,
+        courseId,
         {
             new:true,
             isValidators:true
