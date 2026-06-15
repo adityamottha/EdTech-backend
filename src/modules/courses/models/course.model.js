@@ -77,7 +77,11 @@ const courseSchema = new Schema({
       type: Boolean,
       default:false
     },
-    
+
+    deleteAt :{
+      type:Date
+    },
+
     isPublished: {
       type: Boolean,
       default: false,
