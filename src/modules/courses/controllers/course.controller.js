@@ -1,6 +1,8 @@
 import { ApiResponse } from "../../../utils/ApiResponse.js"
 import { createCourseService, deleteCourseService, getAllDraftCourses, getAllPublicCourseService, updateCourseService, updateThumbnailService } from "../services/course.service.js"
 import { AsyncHandler } from "../../../utils/AsyncHandler.js"
+import { Course } from "../models/course.model.js";
+import { ApiError } from "../../../utils/ApiError.js";
 
 
 // ==================== CREATE COURSE ==================
@@ -132,7 +134,26 @@ const deleteCourseController = AsyncHandler(async (req,res)=>{
     "Course moved to trash!"
     )
   )
-}) 
+});
+
+// ============================== GET DELETED COURSE =========================
+const getDetetedCourseService = async ()=>{
+
+  // find course by isDeleted field 
+  const deletedCourse = await Course.findOne({isDeleted:true});
+
+  // throw is deleted course are not available
+  if(!deletedCourse){
+    throw new ApiError(
+      404,
+      "Deleted courses are not found!"
+    )
+  };
+
+  // return 
+  return deletedCourse;
+
+}
 
 export { 
   createCourseController,
@@ -140,5 +161,6 @@ export {
   getAllDraftCoursController,
   updateCourseController,
   updateThumbnailController,
-  deleteCourseController
+  deleteCourseController,
+  getDetetedCourseService,
 }
