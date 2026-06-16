@@ -2,10 +2,11 @@ import { Router } from "express";
 import { verifyJWT } from "../../middlewares/verifyJWT.middleware.js";
 import { authorizeRole } from "../../middlewares/authorizeRole.middleware.js";
 import { courseEnrollmentController } from "./enrollment.controller.js";
+import { isProfileCompleted } from "../../middlewares/isProfileCompleted.middleware.js";
 
 const router = Router();
 
 // ==========ENROLLMENT COURSE============
-router.post("/:courseId",verifyJWT,authorizeRole("Student"),courseEnrollmentController)
+router.post("/:courseId",verifyJWT,authorizeRole("Student"),isProfileCompleted,courseEnrollmentController)
 
 export default router
