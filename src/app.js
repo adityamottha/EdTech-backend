@@ -17,7 +17,7 @@ app.use(express.urlencoded({limit:"16kb",extended:true}));
 app.use(cookieParser());
 
 // AUTH-ROUTER
-import  auth  from "./modules/auth/authUser.routes.js"
+import  auth  from "./modules/auth/authUser.routes.js";
 app.use("/api/v1/users",auth);
 
 // PROFILE-ROUTER
@@ -30,11 +30,15 @@ app.use("/api/v1/teacher",teacher);
 
 // ADMIN-ROUTER
 import admin from "./modules/admin/admin.routes.js";
-app.use("/api/v1/admin",admin)
+app.use("/api/v1/admin",admin);
 
 // COURSE-ROUTER
-import course from "./modules/courses/routes/course.route.js"
-app.use("/api/v1/course",course)
+import course from "./modules/courses/routes/course.route.js";
+app.use("/api/v1/course",course);
+
+// ENROLLMENT ROUTER
+import enrollment from "./modules/enrollment/enrollment.route.js";
+app.use("/api/v1/enrollment",enrollment);
 
 // ERROR MIDDLEWARE--------------------------------
 import { errorMiddleware } from "./middlewares/error.middleware.js";
