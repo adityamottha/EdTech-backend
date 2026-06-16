@@ -35,4 +35,16 @@ const enrollmentSchema = new Schema({
 
 },{timestamps:true});
 
+// restrict duplicate enrollment
+enrollmentSchema.index(
+  {
+    studentId: 1,
+    courseId: 1,
+  },
+  {
+    unique: true,
+  }
+);
+
+
 export const Enrollment = model("Enrollment", enrollmentSchema )
