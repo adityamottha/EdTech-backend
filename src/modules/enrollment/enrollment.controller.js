@@ -16,7 +16,7 @@ export const courseEnrollmentController = AsyncHandler(async (req,res)=>{
     const enrollment = await courseEnrollmentService(studentId,courseId);
 
     // response
-    return res.status(200),json(
+    return res.status(200).json(
         new ApiResponse(200,enrollment, "Enrolled course succesfully")
     );
 

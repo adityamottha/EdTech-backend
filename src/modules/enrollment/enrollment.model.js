@@ -21,7 +21,7 @@ const enrollmentSchema = new Schema({
   status:{
     type:String,
     enum:[ "Active","Completed","Cancelled"],
-    default:"active"
+    default:"Active"
   },
 
   enrolledAt:{

@@ -16,7 +16,7 @@ export const courseEnrollmentService = async (studentId,courseId) =>{
     if(!course) throw new ApiError(400,"course not found")
 
     // check if already enrolled
-    const existingEnrolment = await Enrollment.findById({studentId,courseId})
+    const existingEnrolment = await Enrollment.findOne({studentId,courseId})
     if(existingEnrolment) throw new ApiError(409,"Already Enrolled course!")
 
     // create enrolled
