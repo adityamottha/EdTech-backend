@@ -27,3 +27,20 @@ export const courseEnrollmentService = async (studentId,courseId) =>{
 
     return createEnrolled;
 }
+
+// ===================== GET MY ENROLLED COURSE ==============================
+export const getMyEnrolledCourseService  = async (studentId) =>{
+    // student id is required
+    if(!studentId){
+        throw new ApiError(400,"StudentId is required!");
+    };
+
+    // find enrolled course and populate courseId 
+    const existedEnrolled = await Enrollment.findById(studentId).populate("courseId");
+    if(!existedEnrolled){
+        throw new ApiError(408,"No enrolled course found!");
+    };
+
+    // send response 
+    return existedEnrolled;
+}
