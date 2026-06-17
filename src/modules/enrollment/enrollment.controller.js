@@ -1,6 +1,7 @@
 import { AsyncHandler } from "../../utils/AsyncHandler.js";
 import { ApiResponse } from "../../utils/ApiResponse.js"
-import { courseEnrollmentService } from "./enrollment.service.js";
+import { courseEnrollmentService, getMyEnrolledCourseService } from "./enrollment.service.js";
+import { response } from "express";
 
 // ========================ENROLLMENT =======================
 export const courseEnrollmentController = AsyncHandler(async (req,res)=>{
@@ -31,6 +32,10 @@ export const getMyEnrolledCourseController = AsyncHandler(async (req,res) =>{
     const studentId = req.user?._id
 
     // call service function and pass parameters
-    const enrolled = await getMy
+    const enrolled = await getMyEnrolledCourseService(studentId);
 
-})
+    // response 
+    return res.status(200).json(
+        new ApiResponse(200,enrolled,"Fetched all courses!")
+    );
+});
