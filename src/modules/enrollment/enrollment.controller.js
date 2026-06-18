@@ -64,3 +64,24 @@ export const checkEnrollmentController = AsyncHandler(async (req, res) => {
     )
   );
 });
+
+// ========= GET STUDENTS WHO ENROLLED COURSE FOR TEACHER=========
+import { getCourseStudentsService } from "./enrollment.service.js";
+
+export const getCourseStudentsController =
+AsyncHandler(async (req, res) => {
+
+    // get courseId from params
+  const { courseId } = req.params;
+
+// get call service function and pass arg
+  const students = await getCourseStudentsService(courseId);
+
+  return res.status(200).json(
+    new ApiResponse(
+      200,
+      students,
+      "Students fetched successfully!"
+    )
+  );
+});
