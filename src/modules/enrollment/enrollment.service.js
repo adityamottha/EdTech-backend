@@ -36,9 +36,14 @@ export const getMyEnrolledCourseService  = async (studentId) =>{
     };
 
     // find enrolled course and populate courseId 
-    const existedEnrolled = await Enrollment.findById(studentId).populate("courseId");
-    if(!existedEnrolled){
-        throw new ApiError(408,"No enrolled course found!");
+    const existedEnrolled = await Enrollment.find({studentId}).populate(
+        "courseId",
+        "title description thumbnail price level language duration"
+    );
+    
+    // check is enrolled already 
+    if(!existedEnrolled.length){
+        throw new ApiError(404,"No enrolled course found!");
     };
 
     // send response 
