@@ -39,3 +39,28 @@ export const getMyEnrolledCourseController = AsyncHandler(async (req,res) =>{
         new ApiResponse(200,enrolled,"Fetched all courses!")
     );
 });
+
+
+// ================= CHECK IF ENROLLED =====================
+
+export const checkEnrollmentController = AsyncHandler(async (req, res) => {
+
+    // get ids from req
+  const studentId = req.user._id;
+  const { courseId } = req.params;
+
+//   call and pass argument to service funtion 
+  const result = await checkEnrollmentService(
+      studentId,
+      courseId
+    );
+
+    // response 
+  return res.status(200).json(
+    new ApiResponse(
+      200,
+      result,
+      "Enrollment status fetched"
+    )
+  );
+});
