@@ -48,4 +48,40 @@ export const getMyEnrolledCourseService  = async (studentId) =>{
 
     // send response 
     return existedEnrolled;
-}
+};
+
+
+// ================= CHECK IF ENROLLED =====================
+export const checkEnrollmentService = async (studentId,courseId) => {
+
+    // check studentId and courseId avaiable 
+  if (!studentId) {
+    throw new ApiError(
+      400,
+      "StudentId is required"
+    );
+  }
+
+  if (!courseId) {
+    throw new ApiError(
+      400,
+      "StudentId is required"
+    );
+  }
+
+// Find if student enrolled 
+  const enrollment = await Enrollment.findOne({
+    studentId,
+    courseId,
+  });
+
+//   if not through error
+  if(!enrollment){
+    throw new ApiError(
+        404,
+        "Enrolled course first!"
+    )
+  };
+
+  return enrollment;
+}; 
