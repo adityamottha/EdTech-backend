@@ -85,3 +85,36 @@ export const checkEnrollmentService = async (studentId,courseId) => {
 
   return enrollment;
 }; 
+
+
+// =============== GET STUDENT WHO ENROLLED COURSE (FOR TECHER AND ADMIN)======
+export const getCourseStudentsService = async (courseId) => {
+
+    // thrr err if courseId is not available
+  if (!courseId) {
+    throw new ApiError(
+      400,
+      "CourseId is required!"
+    );
+  }
+   
+  // find course from enrollement with student+course
+  const students = await Enrollment.find({
+    courseId,
+    status: "Active",
+  }).populate(
+    "studentId",
+    "fullName avatar email"
+  );
+
+// check is no student there
+  if (!students.length) {
+    throw new ApiError(
+      404,
+      "No students enrolled in this course!"
+    );
+  }
+
+//   return
+  return students;
+};

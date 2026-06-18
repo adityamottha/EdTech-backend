@@ -1,6 +1,6 @@
 import { AsyncHandler } from "../../utils/AsyncHandler.js";
 import { ApiResponse } from "../../utils/ApiResponse.js"
-import { courseEnrollmentService, getMyEnrolledCourseService } from "./enrollment.service.js";
+import { checkEnrollmentService, courseEnrollmentService, getMyEnrolledCourseService } from "./enrollment.service.js";
 import { response } from "express";
 
 // ========================ENROLLMENT =======================
