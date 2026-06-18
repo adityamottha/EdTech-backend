@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { verifyJWT } from "../../middlewares/verifyJWT.middleware.js";
 import { authorizeRole } from "../../middlewares/authorizeRole.middleware.js";
-import { checkEnrollmentController, courseEnrollmentController, getMyEnrolledCourseController } from "./enrollment.controller.js";
+import { checkEnrollmentController, courseEnrollmentController, getCourseStudentsController, getMyEnrolledCourseController } from "./enrollment.controller.js";
 import { isProfileCompleted } from "../../middlewares/isProfileCompleted.middleware.js";
 
 const router = Router();
@@ -20,4 +20,11 @@ router.get(
   checkEnrollmentController
 );
 
+// ======== GET STUDENTS WHO ENROLLED COURSE FOR TEACHER =============
+router.get(
+  "/:courseId/students",
+  verifyJWT,
+  authorizeRole("Teacher", "Admin"),
+  getCourseStudentsController
+);
 export default router

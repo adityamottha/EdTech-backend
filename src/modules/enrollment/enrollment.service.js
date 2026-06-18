@@ -104,7 +104,7 @@ export const getCourseStudentsService = async (courseId) => {
     status: "Active",
   }).populate(
     "studentId",
-    "fullName avatar email"
+    "firstName lastName avatar email"
   );
 
 // check is no student there
