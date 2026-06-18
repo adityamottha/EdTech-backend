@@ -102,10 +102,14 @@ export const getCourseStudentsService = async (courseId) => {
   const students = await Enrollment.find({
     courseId,
     status: "Active",
-  }).populate(
-    "studentId",
-    "firstName lastName avatar email"
-  );
+  }).populate({
+  path:"studentId",
+  select:"email",
+  populate:{
+    path:"profileId",
+    select:"firstName lastName avatar"
+  }
+});
 
 // check is no student there
   if (!students.length) {

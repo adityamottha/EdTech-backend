@@ -142,6 +142,11 @@ const authUserSchema = new mongoose.Schema({
       ref: "AuthUser",
     },
 
+    profileId:{
+     type:Schema.Types.ObjectId,
+     ref:"Profile"
+    },
+
     accountStatus:{
         type:String,
         enum:["Active","Suspended", "banned"],
