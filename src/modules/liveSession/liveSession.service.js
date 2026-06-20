@@ -3,7 +3,7 @@ import { ApiError } from "../../utils/ApiError.js"
 
 // ================== CREATE LIVE SESSION ===============
 
-export const createLiveSession = async (
+export const createLiveSessionService = async (
     courseId,
     teacherId,
     title,
