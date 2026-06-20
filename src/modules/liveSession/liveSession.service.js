@@ -17,9 +17,18 @@ export const createLiveSessionService = async (
     if(!courseId) throw new ApiError(400,"courseId is required!");
     if(!teacherId) throw new ApiError(400,"teacherId is required!");
 
+    // check all data is required
+    if(!title?.trim()) throw new ApiError(400,"title is required");
+    if(!description?.trim()) throw new ApiError(400,"description is required");
+    if(!durationMinutes) throw new ApiError(400,"durationMinutes is required");
+    if(!meetingLink?.trim()) throw new ApiError(400,"meetingLink is required");
+    if(!scheduledAt) throw new ApiError(400,"scheduledAt is required");
+
     // find and check is session already existed
     const existedSession = await LiveSession.findOne({
-        $or:[{_id},{meetingLink}]
+        courseId,
+        meetingLink,
+        scheduledAt
     });
 
     if(existedSession){
