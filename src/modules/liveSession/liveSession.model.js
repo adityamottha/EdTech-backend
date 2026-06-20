@@ -54,6 +54,11 @@ const liveSessionSchema = new Schema({
 
      completedAt:{
         type:Date
+     },
+
+     isDeleted:{
+        type:Boolean,
+        default:false
      }
 
 },{timestamps:true});
