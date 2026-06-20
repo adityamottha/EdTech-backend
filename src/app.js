@@ -40,6 +40,10 @@ app.use("/api/v1/course",course);
 import enrollment from "./modules/enrollment/enrollment.route.js";
 app.use("/api/v1/enrollment",enrollment);
 
+// LIVE-SESSION ROUTER
+import liveSession from "./modules/liveSession/liveSession.route.js";
+app.use("/api/v1/live-session",liveSession)
+
 // ERROR MIDDLEWARE--------------------------------
 import { errorMiddleware } from "./middlewares/error.middleware.js";
 app.use(errorMiddleware);
