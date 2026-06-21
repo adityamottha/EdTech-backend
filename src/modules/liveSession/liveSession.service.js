@@ -53,4 +53,35 @@ export const createLiveSessionService = async (
     return createSession;
 
 
-}
+};
+
+
+// ======================== GET LIVE SESSION==================
+export const getLiveSessionService =  async (courseId) =>{
+
+    // check course id is required!
+    if(!courseId){
+        throw new ApiError(
+            400,
+            "CourseId is required"
+        );
+    };
+
+    // find session by courseId and populate teacher name and email
+    const liveSession = await LiveSession.findOne({
+        courseId,
+        isDeleted:false
+    });
+
+    // check session available
+    if(!liveSession){
+        throw new ApiError(
+            409,
+            "Live session not found!"
+        );
+    };
+
+    // return 
+    return liveSession;
+
+};
