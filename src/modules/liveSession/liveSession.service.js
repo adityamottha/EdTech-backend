@@ -73,7 +73,8 @@ export const getLiveSessionService =  async (courseId) =>{
         isDeleted:false
     })
     .populate(
-        "teacherId,email, role, firstName, lastName"
+        "teacherId",
+        "email role"
     )
     .sort({scheduledAt:1});
 
