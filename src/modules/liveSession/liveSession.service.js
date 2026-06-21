@@ -71,7 +71,11 @@ export const getLiveSessionService =  async (courseId) =>{
     const liveSession = await LiveSession.findOne({
         courseId,
         isDeleted:false
-    });
+    })
+    .populate(
+        "teacherId,email, role, firstName, lastName"
+    )
+    .sort({scheduledAt:1});
 
     // check session available
     if(!liveSession){

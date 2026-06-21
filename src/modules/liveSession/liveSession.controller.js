@@ -1,4 +1,4 @@
-import { createLiveSessionService } from "./liveSession.service.js";
+import { createLiveSessionService, getLiveSessionService } from "./liveSession.service.js";
 import { ApiResponse } from "../../utils/ApiResponse.js";
 import { AsyncHandler } from "../../utils/AsyncHandler.js";
 
@@ -36,3 +36,24 @@ export const createLiveSessionController = AsyncHandler(async (req,res)=>{
    );
 
 })
+
+
+// =================== GET LIVE SESSION =======================
+export const getLiveSessionController = AsyncHandler(async (req,res) =>{
+    
+    // get courseId from params
+    const { courseId } = req.params;
+
+    // call service function 
+    const liveSession = await getLiveSessionService(courseId)
+
+    // response 
+    return res.status(200).json(
+        new ApiResponse(
+            200,
+            liveSession,
+            "live session fetched succesfully!"
+        )
+    );
+});
+
