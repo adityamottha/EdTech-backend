@@ -40,10 +40,10 @@ router.patch(
     startLiveSessionController
 );
 
-// // CANCEL LIVE SESSION
-// router.patch(
-//     "/:sessionId/cancel",
-//     verifyJWT,
-//     authorizeRole("Admin","Teacher"),
-//     cancelLiveSessionController
-// );
+// CANCEL LIVE SESSION
+router.patch(
+    "/:sessionId/cancel",
+    verifyJWT,
+    authorizeRole("Admin","Teacher"),
+    cancelLiveSessionController
+);
