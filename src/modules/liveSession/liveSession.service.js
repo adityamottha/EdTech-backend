@@ -246,3 +246,39 @@ export const completeLiveSessionService = async (sessionId) =>{
     // return
     return session;
 }
+
+// ================ DELETE LIVE SESSION ===============
+export const deleteLiveSessionService  = async (sessionId)=>{
+
+    // check sessionId is available
+    if(!sessionId){
+        throw new ApiError(
+            400,
+            "sessionId is required!"
+        );
+    };
+
+    //find and update delete status to true
+    const session = await LiveSession.findOneAndUpdate(
+        sessionId,
+        {
+            isDeleted:true
+        },
+        {
+            new:true,
+            runValidators:true
+        }
+    );
+
+    // check deleted or mot if ot thrr in err
+    if(!session){
+        throw new ApiError(
+            500,
+            "failed to delete session!"
+        );
+    };
+
+    // return
+    return session;
+    
+}
