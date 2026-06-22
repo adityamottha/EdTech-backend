@@ -1,4 +1,4 @@
-import { createLiveSessionService, getLiveSessionService } from "./liveSession.service.js";
+import { createLiveSessionService, getLiveSessionService, updateLiveSessionService } from "./liveSession.service.js";
 import { ApiResponse } from "../../utils/ApiResponse.js";
 import { AsyncHandler } from "../../utils/AsyncHandler.js";
 
@@ -57,3 +57,19 @@ export const getLiveSessionController = AsyncHandler(async (req,res) =>{
     );
 });
 
+// ================== LIVE SESSION UPDATE ===========
+export const updateLiveSessionController = AsyncHandler(async (req,res) =>{
+
+    // get session id in params
+    const { sessionId } = req.params;
+
+    // get data from req.body 
+    const data = req.body
+
+    // call service function
+    const session = await updateLiveSessionService(sessionId,data);
+
+    // return
+    return session;
+    
+});
