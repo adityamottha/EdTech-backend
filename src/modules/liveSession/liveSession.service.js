@@ -90,3 +90,44 @@ export const getLiveSessionService =  async (courseId) =>{
     return liveSession;
 
 };
+
+
+// ================= UPDATE LIVE SESSION ======================
+export const updateLiveSessionService = async (sessionId, data) =>{
+
+    // check fielda are available 
+    if(!sessionId){
+        throw new ApiError(
+            400,
+            "sessionId is required!"
+        );
+    };
+
+    if(!data){
+        throw new ApiError(
+            400,
+            "data for updation is required!"
+        );
+    };
+
+    // find session by sessionId and update 
+    const session = await LiveSession.findByIdAndUpdate(
+        sessionId,
+        data,
+        {
+            new:true,
+            runValidators:true
+        }
+    );
+
+    // check update completed
+    if(!session){
+        throw new ApiError(
+            500,
+            "Failed to update live-session"
+        );
+    };
+
+    // return
+    return session;
+}
