@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { cancelLiveSessionController, completeLiveSessionController, createLiveSessionController, deleteLiveSessionController, getLiveSessionController, startLiveSessionController, updateLiveSessionController } from "./liveSession.controller.js";
+import { cancelLiveSessionController, completeLiveSessionController, createLiveSessionController, deleteLiveSessionController, getAllDeletedSessionController, getLiveSessionController, startLiveSessionController, updateLiveSessionController } from "./liveSession.controller.js";
 import { verifyJWT } from "../../middlewares/verifyJWT.middleware.js";
 import { authorizeRole } from "../../middlewares/authorizeRole.middleware.js";
 
@@ -62,4 +62,13 @@ router.delete(
     verifyJWT,
     authorizeRole("Admin","Teacher"),
     deleteLiveSessionController
+);
+
+// GET ALL DELETED SESSION
+
+router.get(
+    "/deleted",
+    verifyJWT,
+    authorizeRole("Admin","Teacher"),
+    getAllDeletedSessionController
 );
