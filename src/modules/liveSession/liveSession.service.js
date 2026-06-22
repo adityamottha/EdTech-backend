@@ -282,3 +282,26 @@ export const deleteLiveSessionService  = async (sessionId)=>{
     return session;
 
 }
+
+// =========== GET ALL DELETED SESSION ====================
+export const getAllDeletedSessionService = async () =>{
+
+    // find deleted session from schema through the field isDeleted
+    const session = await LiveSession.find(
+        {
+            isDeleted:true
+        }
+    );
+
+    // check successfully found if not give error
+    if(!session){
+        throw new ApiError(
+            500,
+            "No deleted documents found!"
+        );
+    };
+
+    // return 
+    return session;
+
+}
