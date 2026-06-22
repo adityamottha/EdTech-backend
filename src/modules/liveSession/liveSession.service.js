@@ -210,3 +210,39 @@ export const cancelLiveSessionService = async (sessionId) =>{
     // return 
     return session;
 }
+
+
+// ============= COMPLETED LIVE SESSION ================
+export const completedLiveSessionService = async (sessionId) =>{
+    
+    // check sessionId is required
+    if(!sessionId){
+        throw new ApiError(
+            200,
+            "sessionId is required!"
+        );
+    };
+
+    // find and update by id live session status to completed
+    const session = await LiveSession.findByIdAndUpdate(
+        sessionId.trim(),
+        {
+            sessionStatus:"COMPLETED"
+        },
+        {
+            new:true,
+            runValidators:true
+        }
+    );
+
+    // chek session is updated if not throw error
+    if(!session){
+        throw new ApiError(
+            500,
+            "Failed to update session to completed!"
+        );
+    };
+
+    // return
+    return session
+}
