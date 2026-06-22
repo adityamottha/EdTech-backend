@@ -154,6 +154,9 @@ export const startLiveSessionService = async (sessionId) =>{
     const session = await LiveSession.findByIdAndUpdate(
         sessionId.trim(),
         {
+            sessionStatus:"ON_GOING"
+        },
+        {
             new:true,
             runValidators:true
         }
