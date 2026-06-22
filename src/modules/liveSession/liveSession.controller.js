@@ -66,10 +66,19 @@ export const updateLiveSessionController = AsyncHandler(async (req,res) =>{
     // get data from req.body 
     const data = req.body
 
+    console.log("DATA", data)
+    console.log("SESSION-ID", sessionId)
+
     // call service function
     const session = await updateLiveSessionService(sessionId,data);
 
     // return
-    return session;
-    
+    return res.status(200).json(
+        new ApiResponse(
+            200,
+            session,
+            `Updated data successfully!`
+        )
+    );
+
 });

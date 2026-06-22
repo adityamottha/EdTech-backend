@@ -110,9 +110,16 @@ export const updateLiveSessionService = async (sessionId, data) =>{
         );
     };
 
+    // dot not allow system fields to be update 
+      delete data.teacherId;
+      delete data.courseId;
+      delete data.sessionStatus;
+      delete data.startedAt;
+      delete data.completedAt;
+
     // find session by sessionId and update 
     const session = await LiveSession.findByIdAndUpdate(
-        sessionId,
+        sessionId.trim(),
         data,
         {
             new:true,

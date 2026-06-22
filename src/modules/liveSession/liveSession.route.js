@@ -24,7 +24,7 @@ router.get(
 export default router;
 
 // UPDATE LIVE SESSION
-router.get(
+router.patch(
     "/update/:sessionId",
     verifyJWT,
     authorizeRole("Admin","Teacher"),
