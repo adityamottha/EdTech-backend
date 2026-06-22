@@ -104,7 +104,7 @@ export const startLiveSessionController = AsyncHandler(async (req,res) =>{
 });
 
 // ====================== CANCEL LIVE SESSION ==================
-export const cancelLiveSessionController = AsyncHandler(async () =>{
+export const cancelLiveSessionController = AsyncHandler(async (req,res) =>{
 
     // get sessionId from params
     const { sessionId } = req.params;
