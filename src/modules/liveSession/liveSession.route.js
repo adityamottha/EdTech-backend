@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createLiveSessionController, getLiveSessionController, updateLiveSessionController } from "./liveSession.controller.js";
+import { createLiveSessionController, getLiveSessionController, startLiveSessionController, updateLiveSessionController } from "./liveSession.controller.js";
 import { verifyJWT } from "../../middlewares/verifyJWT.middleware.js";
 import { authorizeRole } from "../../middlewares/authorizeRole.middleware.js";
 
@@ -29,4 +29,12 @@ router.patch(
     verifyJWT,
     authorizeRole("Admin","Teacher"),
     updateLiveSessionController
+);
+
+// START LIVE SESSION
+router.patch(
+    "/:sessionId/start",
+    verifyJWT,
+    authorizeRole("Admin","Teacher"),
+    startLiveSessionController
 )
