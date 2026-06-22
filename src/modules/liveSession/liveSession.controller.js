@@ -1,4 +1,4 @@
-import { cancelLiveSessionService, completeLiveSessionService, createLiveSessionService, deleteLiveSessionService, getLiveSessionService, startLiveSessionService, updateLiveSessionService } from "./liveSession.service.js";
+import { cancelLiveSessionService, completeLiveSessionService, createLiveSessionService, deleteLiveSessionService, getAllDeletedSessionService, getLiveSessionService, startLiveSessionService, updateLiveSessionService } from "./liveSession.service.js";
 import { ApiResponse } from "../../utils/ApiResponse.js";
 import { AsyncHandler } from "../../utils/AsyncHandler.js";
 
@@ -157,4 +157,20 @@ export const deleteLiveSessionController = AsyncHandler(async (req,res) =>{
             "Deleted live session successfully!"
         )
     );
-})
+});
+
+// ============== GET DELETED SESSION ===============
+export const getAllDeletedSessionController = AsyncHandler(async (req,res) =>{
+    
+    // call service function 
+    const session = await getAllDeletedSessionService();
+
+    // return response 
+    return res.status(200).json(
+        new ApiResponse(
+            200,
+            session,
+            "Fetched all deleted session succesfully."
+        )
+    )
+});
