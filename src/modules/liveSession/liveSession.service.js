@@ -137,4 +137,38 @@ export const updateLiveSessionService = async (sessionId, data) =>{
 
     // return
     return session;
-}
+};
+
+// ================== START LIVE SESSION ========================
+
+export const startLiveSessionService = async (sessionId) =>{
+    // check sessionId is available\
+    if(!sessionId){
+        throw new ApiError(
+            400,
+            "sessionId is required!"
+        );
+    };
+
+    // find and update session status to on_going
+    const session = await LiveSession.findByIdAndUpdate(
+        sessionId.trim(),
+        {
+            new:true,
+            runValidators:true
+        }
+    );
+
+    // check if status updated if not give error 
+    if(!session){
+        throw new ApiError(
+            500,
+            "Failed to start live class!"
+        );
+    };
+
+    // return
+    return session
+
+};
+
