@@ -1,4 +1,4 @@
-import { cancelLiveSessionService, completeLiveSessionService, createLiveSessionService, getLiveSessionService, startLiveSessionService, updateLiveSessionService } from "./liveSession.service.js";
+import { cancelLiveSessionService, completeLiveSessionService, createLiveSessionService, deleteLiveSessionService, getLiveSessionService, startLiveSessionService, updateLiveSessionService } from "./liveSession.service.js";
 import { ApiResponse } from "../../utils/ApiResponse.js";
 import { AsyncHandler } from "../../utils/AsyncHandler.js";
 

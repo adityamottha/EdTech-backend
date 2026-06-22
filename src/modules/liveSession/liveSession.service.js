@@ -259,8 +259,8 @@ export const deleteLiveSessionService  = async (sessionId)=>{
     };
 
     //find and update delete status to true
-    const session = await LiveSession.findOneAndUpdate(
-        sessionId,
+    const session = await LiveSession.findByIdAndUpdate(
+        sessionId.trim(),
         {
             isDeleted:true
         },
@@ -280,5 +280,5 @@ export const deleteLiveSessionService  = async (sessionId)=>{
 
     // return
     return session;
-    
+
 }
