@@ -1,7 +1,8 @@
 import { Router } from "express";
-import { createLiveSessionController, getLiveSessionController, startLiveSessionController, updateLiveSessionController } from "./liveSession.controller.js";
+import { cancelLiveSessionController, createLiveSessionController, getLiveSessionController, startLiveSessionController, updateLiveSessionController } from "./liveSession.controller.js";
 import { verifyJWT } from "../../middlewares/verifyJWT.middleware.js";
 import { authorizeRole } from "../../middlewares/authorizeRole.middleware.js";
+
 
 const router = Router();
 
@@ -37,4 +38,12 @@ router.patch(
     verifyJWT,
     authorizeRole("Admin","Teacher"),
     startLiveSessionController
-)
+);
+
+// // CANCEL LIVE SESSION
+// router.patch(
+//     "/:sessionId/cancel",
+//     verifyJWT,
+//     authorizeRole("Admin","Teacher"),
+//     cancelLiveSessionController
+// );
