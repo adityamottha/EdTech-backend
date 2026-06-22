@@ -213,7 +213,7 @@ export const cancelLiveSessionService = async (sessionId) =>{
 
 
 // ============= COMPLETED LIVE SESSION ================
-export const completedLiveSessionService = async (sessionId) =>{
+export const completeLiveSessionService = async (sessionId) =>{
     
     // check sessionId is required
     if(!sessionId){
@@ -244,5 +244,5 @@ export const completedLiveSessionService = async (sessionId) =>{
     };
 
     // return
-    return session
+    return session;
 }

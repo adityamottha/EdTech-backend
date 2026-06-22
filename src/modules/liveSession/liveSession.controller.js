@@ -1,4 +1,4 @@
-import { cancelLiveSessionService, createLiveSessionService, getLiveSessionService, startLiveSessionService, updateLiveSessionService } from "./liveSession.service.js";
+import { cancelLiveSessionService, completeLiveSessionService, createLiveSessionService, getLiveSessionService, startLiveSessionService, updateLiveSessionService } from "./liveSession.service.js";
 import { ApiResponse } from "../../utils/ApiResponse.js";
 import { AsyncHandler } from "../../utils/AsyncHandler.js";
 
@@ -118,6 +118,24 @@ export const cancelLiveSessionController = AsyncHandler(async (req,res) =>{
             200,
             session,
             "session succesfully cancelled."
+        )
+    )
+});
+
+export const completeLiveSessionController = AsyncHandler(async (req,res) =>{
+
+    // get sessionId from req.params
+    const {sessionId} = req.params;
+
+    // call service function
+    const session = await completeLiveSessionService(sessionId);
+
+    // return response
+    return res.status(200).json(
+        new ApiResponse(
+            200,
+            session,
+            "Completed session successfully."
         )
     )
 });
