@@ -139,3 +139,22 @@ export const completeLiveSessionController = AsyncHandler(async (req,res) =>{
         )
     )
 });
+
+// ============== DELETE LIVE SESSION ===============
+export const deleteLiveSessionController = AsyncHandler(async (req,res) =>{
+    
+    // get sessionId from params
+    const { sessionId } = req.params;
+
+    // call service funtion
+    const session = await deleteLiveSessionService(sessionId);
+
+    // return response
+    return res.status(200).json(
+        new ApiResponse(
+            200,
+            session,
+            "Deleted live session successfully!"
+        )
+    );
+})

@@ -55,3 +55,11 @@ router.patch(
     authorizeRole("Admin","Teacher"),
     completeLiveSessionController
 );
+
+// DELETE LIVE SESSION
+// router.patch(
+//     "/:sessionId/end",
+//     verifyJWT,
+//     authorizeRole("Admin","Teacher"),
+//     completeLiveSessionController
+// );
