@@ -175,3 +175,38 @@ export const startLiveSessionService = async (sessionId) =>{
 
 };
 
+// =================== CANCEL LIVE SESSION ======================
+export const cancelLiveSessionService = async (sessionId) =>{
+
+    // check sessionId is available
+    if(!sessionId){
+        throw new ApiError(
+            400,
+            "SessionId is required!"
+        );
+    };
+
+    // find and update live-session status to cencalled
+    const session = await LiveSession.findByIdAndUpdate(
+        sessionId,
+        {
+            sessionStatus:"CANCELLED"
+        },
+        {
+            new:true,
+            runValidators:true
+        },
+    );
+
+    // check is failed to update status
+    if(!session){
+        throw new ApiError(
+            500,
+            "failed to update session live status"
+        );
+    };
+
+
+    // return 
+    return session;
+}
