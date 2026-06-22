@@ -1,4 +1,4 @@
-import { createLiveSessionService, getLiveSessionService, updateLiveSessionService } from "./liveSession.service.js";
+import { createLiveSessionService, getLiveSessionService, startLiveSessionService, updateLiveSessionService } from "./liveSession.service.js";
 import { ApiResponse } from "../../utils/ApiResponse.js";
 import { AsyncHandler } from "../../utils/AsyncHandler.js";
 
@@ -66,8 +66,8 @@ export const updateLiveSessionController = AsyncHandler(async (req,res) =>{
     // get data from req.body 
     const data = req.body
 
-    console.log("DATA", data)
-    console.log("SESSION-ID", sessionId)
+    // console.log("DATA", data)
+    // console.log("SESSION-ID", sessionId)
 
     // call service function
     const session = await updateLiveSessionService(sessionId,data);
@@ -82,3 +82,23 @@ export const updateLiveSessionController = AsyncHandler(async (req,res) =>{
     );
 
 });
+
+// ================ START LIVE SESSION==================
+
+export const startLiveSessionController = AsyncHandler(async (req,res) =>{
+
+    // get sessionId from params
+    const { sessionId } = req.params
+
+    // call service function
+    const session = await startLiveSessionService(sessionId)
+
+    // return response
+    return res.status(200).json(
+        new ApiResponse(
+            200,
+            session,
+            "Live-session started succesfully."
+        )
+    );
+})
