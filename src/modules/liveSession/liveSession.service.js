@@ -191,7 +191,8 @@ export const cancelLiveSessionService = async (sessionId) =>{
     const session = await LiveSession.findByIdAndUpdate(
         sessionId,
         {
-            sessionStatus:"CANCELLED"
+            sessionStatus:"CANCELLED",
+            cancelledAt:new Date()
         },
         {
             new:true,
@@ -264,7 +265,8 @@ export const deleteLiveSessionService  = async (sessionId)=>{
     const session = await LiveSession.findByIdAndUpdate(
         sessionId.trim(),
         {
-            isDeleted:true
+            isDeleted:true,
+            deletedAt:new Date()
         },
         {
             new:true,
