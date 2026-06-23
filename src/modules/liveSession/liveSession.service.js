@@ -142,7 +142,7 @@ export const updateLiveSessionService = async (sessionId, data) =>{
 // ================== START LIVE SESSION ========================
 
 export const startLiveSessionService = async (sessionId) =>{
-    // check sessionId is available\
+    // check sessionId is available
     if(!sessionId){
         throw new ApiError(
             400,
@@ -154,7 +154,8 @@ export const startLiveSessionService = async (sessionId) =>{
     const session = await LiveSession.findByIdAndUpdate(
         sessionId.trim(),
         {
-            sessionStatus:"ON_GOING"
+            sessionStatus:"ON_GOING",
+            startAt: new Date()
         },
         {
             new:true,
@@ -227,7 +228,8 @@ export const completeLiveSessionService = async (sessionId) =>{
     const session = await LiveSession.findByIdAndUpdate(
         sessionId.trim(),
         {
-            sessionStatus:"COMPLETED"
+            sessionStatus:"COMPLETED",
+            completedAt: new Date()
         },
         {
             new:true,
