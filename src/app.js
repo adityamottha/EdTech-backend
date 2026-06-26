@@ -46,7 +46,7 @@ app.use("/api/v1/live-session",liveSession);
 
 // NOTIFICATION ROUTER
 import notification from "./modules/notification/notification.route.js";
-app.use("/api/v1/notification");
+app.use("/api/v1/notification",notification);
 
 // ERROR MIDDLEWARE--------------------------------
 import { errorMiddleware } from "./middlewares/error.middleware.js";

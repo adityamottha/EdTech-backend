@@ -12,5 +12,11 @@ export const getAllNotificationController = AsyncHandler(async (req,res) =>{
     const notification = await getAllNotificationsService(userId);
 
     // response
-    return  notification;
+    return  res.status(200).json(
+        new ApiResponse(
+            200,
+            notification,
+            "All notifications fetched."
+        )
+    );
 });
