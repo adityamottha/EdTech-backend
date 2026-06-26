@@ -24,8 +24,21 @@ const notificationSchema = new Schema({
 
     type:{
         type:String,
-        enum:[],
-        default:""
+        enum:[
+            "WELCOME",
+        "COURSE_ENROLLMENT",
+        "TEACHER_APPLICATION",
+        "TEACHER_APPROVED",
+        "TEACHER_REJECTED",
+        "LIVE_SESSION_CREATED",
+        "LIVE_SESSION_STARTED",
+        "LIVE_SESSION_COMPLETED",
+        "LIVE_SESSION_CANCELLED",
+        "PAYMENT_SUCCESS",
+        "PAYMENT_FAILED",
+        "GENERAL"
+    ],
+        default:"GENERAL"
     },
 
     isRead:{
