@@ -60,7 +60,7 @@ const getAllNotificationsService = async (userId) =>{
     };
 
     // find notification by userId 
-    const findNotification = await Notification.findById(userId)
+    const findNotification = await Notification.find({userId}).sort({ createdAt: -1})
 
     // return
     return findNotification

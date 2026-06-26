@@ -7,6 +7,7 @@ export const getAllNotificationController = AsyncHandler(async (req,res) =>{
 
     // find userId from req.user
     const userId = req.user?._id;
+    console.log(userId)
 
     // call service worker 
     const notification = await getAllNotificationsService(userId);
