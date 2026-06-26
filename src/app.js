@@ -42,7 +42,11 @@ app.use("/api/v1/enrollment",enrollment);
 
 // LIVE-SESSION ROUTER
 import liveSession from "./modules/liveSession/liveSession.route.js";
-app.use("/api/v1/live-session",liveSession)
+app.use("/api/v1/live-session",liveSession);
+
+// NOTIFICATION ROUTER
+import notification from "./modules/notification/notification.route.js";
+app.use("/api/v1/notification");
 
 // ERROR MIDDLEWARE--------------------------------
 import { errorMiddleware } from "./middlewares/error.middleware.js";
