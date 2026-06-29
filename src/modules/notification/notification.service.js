@@ -69,17 +69,17 @@ const getAllNotificationsService = async (userId) =>{
 
 
 // ==================== NOTIFY ON COURSE ENROLLMENT ====================
-const courseEnrollementNotificationService = async (courseId,userId) => {
+const courseEnrollementNotificationService = async (courseId,studentId) => {
 
     // check all fields are required
-    if(!courseId.trim()){
+    if(!courseId){
         throw new ApiError(
             400,
             "Course not available from this courseId"
         );
     };
 
-    if(!userId.trim()){
+    if(!studentId){
         throw new ApiError(
             400,
             "userId is required!"
@@ -100,23 +100,20 @@ const courseEnrollementNotificationService = async (courseId,userId) => {
 
     // check if user Already enrolled
     const existedNotification = await Notification.findOne({
-        userId,
+        studentId,
         type:"COURSE_ENROLLMENT",
         relatedId:courseId
     })
 
     if(existedNotification){
-        throw new ApiError(
-            409,
-            "You already enrolled this course!"
-        );
+        return existedNotification;
     };
-    
+
     // create notification
    const createNotification = await Notification.create({
-    userId,
+    userId:studentId,
     title: `Successfully enrolled in ${course.title}`,
-    message: `Congratulations! You have successfully enrolled in "${course.title}". We wish you a great learning journey.`,
+    message: `Congratulations! You have successfully enrolled in ${course.title}. We wish you a great learning journey.`,
     type: "COURSE_ENROLLMENT",
     priority: "MEDIUM",
     relatedId: course._id,
