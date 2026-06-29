@@ -1,5 +1,6 @@
 import { Notification } from "./notification.model.js";
 import { ApiError } from "../../utils/ApiError.js";
+import { Course } from "../../modules/courses/models/course.model.js"
 
 /* 
 notification service >>>
@@ -66,7 +67,68 @@ const getAllNotificationsService = async (userId) =>{
     return findNotification
 }
 
+
+// ==================== NOTIFY ON COURSE ENROLLMENT ====================
+const courseEnrollementNotificationService = async (courseId,userId) => {
+
+    // check all fields are required
+    if(!courseId.trim()){
+        throw new ApiError(
+            400,
+            "Course not available from this courseId"
+        );
+    };
+
+    if(!userId.trim()){
+        throw new ApiError(
+            400,
+            "userId is required!"
+        );
+    };
+
+
+    // find course  from courseId
+    const course = await Course.findById(courseId)
+
+    // check Course if Available
+    if(!course){
+        throw new ApiError(
+            409,
+            "Course does not existed!"
+        );
+    };
+
+    // check if user Already enrolled
+    const existedNotification = await Notification.findOne({
+        userId,
+        type:"COURSE_ENROLLMENT",
+        relatedId:courseId
+    })
+
+    if(existedNotification){
+        throw new ApiError(
+            409,
+            "You already enrolled this course!"
+        );
+    };
+    
+    // create notification
+   const createNotification = await Notification.create({
+    userId,
+    title: `Successfully enrolled in ${course.title}`,
+    message: `Congratulations! You have successfully enrolled in "${course.title}". We wish you a great learning journey.`,
+    type: "COURSE_ENROLLMENT",
+    priority: "MEDIUM",
+    relatedId: course._id,
+    relatedModel: "Course"
+});
+
+    // return notification
+    return createNotification;
+}
+
 export {
     registerWelcomeNotificationService,
-    getAllNotificationsService
+    getAllNotificationsService,
+    courseEnrollementNotificationService
 };
