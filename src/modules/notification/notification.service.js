@@ -1,6 +1,7 @@
 import { Notification } from "./notification.model.js";
 import { ApiError } from "../../utils/ApiError.js";
 import { Course } from "../../modules/courses/models/course.model.js"
+import { TeacherApplication } from "../teacher/models/teacherApplication.model.js";
 
 /* 
 notification service >>>
@@ -16,9 +17,12 @@ notification service >>>
 11) notify when payment failed
  */
 
+class NotificationService {
+
 //  =============== NOTIFY USER WHEN REGISTER ===========
-const registerWelcomeNotificationService = async (userId)=>{
+  static async registerWelcomeNotificationService(userId){
     // check everything is given 
+
     if(!userId) throw new ApiError(
         400,
         "UserId required For registerNotification!"
@@ -50,7 +54,7 @@ const registerWelcomeNotificationService = async (userId)=>{
 
 // ==================== GET ALL NOTIFICATIONS =================
 
-const getAllNotificationsService = async (userId) =>{
+  static async getAllNotificationsService (userId){
 
     // check userid is required
     if(!userId){
@@ -69,7 +73,7 @@ const getAllNotificationsService = async (userId) =>{
 
 
 // ==================== NOTIFY ON COURSE ENROLLMENT ====================
-const courseEnrollementNotificationService = async (courseId,studentId) => {
+ static async courseEnrollementNotificationService(courseId,studentId){
 
     // check all fields are required
     if(!courseId){
@@ -124,8 +128,6 @@ const courseEnrollementNotificationService = async (courseId,studentId) => {
     return createNotification;
 }
 
-export {
-    registerWelcomeNotificationService,
-    getAllNotificationsService,
-    courseEnrollementNotificationService
-};
+}
+
+export default notification;
