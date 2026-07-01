@@ -130,4 +130,4 @@ class NotificationService {
 
 }
 
-export default notification;
+export default NotificationService;

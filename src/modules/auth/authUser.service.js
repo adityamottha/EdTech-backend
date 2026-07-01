@@ -2,7 +2,7 @@ import { AuthUser } from "./authUser.model.js";
 import { ApiError } from "../../utils/ApiError.js";
 import jwt from "jsonwebtoken";
 import { generateAccessAndRefreshTokens } from "../../utils/AcceReffTokens.js";
-import { registerWelcomeNotificationService } from "../notification/notification.service.js";
+import NotificationService from "../notification/notification.service.js";
 
 const registerUserService = async ({email,password}) =>{
 
@@ -23,7 +23,7 @@ const registerUserService = async ({email,password}) =>{
     if(!user) throw new ApiError(500,"User failed to register!");
 
     // send welcome message 
-    await registerWelcomeNotificationService(user._id)
+    await NotificationService.registerWelcomeNotificationService(user._id);
     
     // return user
     return user;

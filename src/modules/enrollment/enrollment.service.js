@@ -1,11 +1,9 @@
 import { Enrollment } from "./enrollment.model.js";
 import { ApiError } from "../../utils/ApiError.js";
 import { Course } from "../courses/models/course.model.js"
-import { courseEnrollementNotificationService } from "../notification/notification.service.js";
-
+import NotificationService from "../notification/notification.service.js"
 
 // ==========================enrolled course ===================
-
 export const courseEnrollmentService = async (studentId,courseId) =>{
 
     // check id's are required
@@ -28,7 +26,7 @@ export const courseEnrollmentService = async (studentId,courseId) =>{
 
     // send notification of enrolled course 
     try {
-      await courseEnrollementNotificationService(courseId,studentId)
+      await NotificationService.courseEnrollementNotificationService(courseId,studentId);
     } catch (error) {
       console.log("FAILED TO SEND ENROLLEMENT NOTIFICATION: ",error?.message)
     }

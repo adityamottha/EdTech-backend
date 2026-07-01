@@ -1,6 +1,6 @@
 import { AsyncHandler } from "../../utils/AsyncHandler.js";
 import { ApiResponse } from "../../utils/ApiResponse.js";
-import { getAllNotificationsService } from "./notification.service.js";
+import NotificationService from "./notification.service.js";
 
 // ================ GET USER ALL NOTOFICATION ==============
 export const getAllNotificationController = AsyncHandler(async (req,res) =>{
@@ -10,7 +10,7 @@ export const getAllNotificationController = AsyncHandler(async (req,res) =>{
     console.log(userId)
 
     // call service worker 
-    const notification = await getAllNotificationsService(userId);
+    const notification = await NotificationService.getAllNotificationsService(userId);
 
     // response
     return  res.status(200).json(
