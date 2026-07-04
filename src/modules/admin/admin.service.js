@@ -1,5 +1,6 @@
 import { ApiError } from "../../utils/ApiError.js";
 import { AuthUser } from "../auth/authUser.model.js";
+import NotificationService from "../notification/notification.service.js";
 
 // GET AL USERS---------------------
 const getAllUsersService = async () => {
@@ -129,6 +130,8 @@ const approvedTeacherService = async ({userId})=>{
    {new:true}
   );
 
+  // push approved notification
+  await NotificationService.teacherApprovedNotificationService(userId);
   // return 
   return updateUser;
 };

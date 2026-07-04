@@ -38,7 +38,7 @@ const teacherApplicationService = async ({userId,specialization,qualification})=
 
     // push notification for application
     const applicationId = application._id
-    await NotificationService.notifyTeacherWhenAppliedForTeacher(userId,applicationId)
+    await NotificationService.notifyTeacherWhenAppliedForTeacherService(userId,applicationId)
     
     // return
     return application;

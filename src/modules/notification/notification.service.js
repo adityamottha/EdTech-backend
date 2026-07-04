@@ -129,7 +129,7 @@ class NotificationService {
 }
 
 // ================== NOTIFY USER WHEN APPLIED FOR TEACHER ==========================
-static async notifyTeacherWhenAppliedForTeacher (userId,applicationId){
+static async notifyTeacherWhenAppliedForTeacherService (userId,applicationId){
 
     // check userId is available
     if(!userId){
@@ -168,7 +168,7 @@ static async notifyTeacherWhenAppliedForTeacher (userId,applicationId){
 }
 
 // =============NOTIFY WHEN USER APPROVED FOR TEACHER ==================
-static async teacherApprovedNotification (userId){
+static async teacherApprovedNotificationService (userId){
 
     // check userId is available
     if(!userId){
@@ -200,13 +200,12 @@ static async teacherApprovedNotification (userId){
         priority: "MEDIUM",
         relatedId: userId,
         relatedModel: "AuthUser"
-    })
-
-    // return 
-    return notification
+    }); 
 
     // return
+    return notification
 }
+
 }
 
 export default NotificationService;
