@@ -1,5 +1,6 @@
 import { TeacherApplication } from "../models/teacherApplication.model.js";
 import { ApiError } from "../../../utils/ApiError.js";
+import NotificationService from "../../notification/notification.service.js";
 
 const teacherApplicationService = async ({userId,specialization,qualification})=>{
     // check if fields are empty if true throw error
@@ -24,7 +25,7 @@ const teacherApplicationService = async ({userId,specialization,qualification})=
     };
 
     // create application
-    const CreateApplication = await TeacherApplication.create({
+    const application = await TeacherApplication.create({
         userId,
         specialization,
         qualification,
@@ -35,9 +36,11 @@ const teacherApplicationService = async ({userId,specialization,qualification})=
         throw new ApiError(500,"Application failed to submit!")
     };
 
-    // return
+    // push notification for application
+    await NotificationService.notifyTeacherWhenAppliedForTeacher(userId,application._id)
     
-    return CreateApplication;
+    // return
+    return application;
 };
 
 export { teacherApplicationService }

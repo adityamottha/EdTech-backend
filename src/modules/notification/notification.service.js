@@ -128,6 +128,46 @@ class NotificationService {
     return createNotification;
 }
 
+// ================== NOTIFY USER WHEN APPLIED FOR TEACHER ==========================
+static async notifyTeacherWhenAppliedForTeacher (userId){
+
+    // check userId is available
+    if(!userId){
+        throw new ApiError(
+            400,
+            "userId is required!"
+        );
+    };
+
+    // find if user already done application
+   const existingNotification = await Notification.findOne({
+    userId,
+    type: "TEACHER_APPLICATION"
+    });
+
+    if(existingNotification){
+        throw new ApiError(
+            409,
+            "You already applied for teacher!"
+        );
+    };
+
+    // create notification
+    const notification = await Notification.create({
+        userId,
+        title: "Teacher Application Submitted",
+        message: "Congratulations! You have successfully applied to become a teacher. Your application is under review.",
+        type: "TEACHER_APPLICATION",
+        priority: "MEDIUM",
+        relatedId: applicationId,
+        relatedModel: "TeacherApplication"
+    })
+
+    // return 
+    return notification
+}
+
+
 }
 
 export default NotificationService;
