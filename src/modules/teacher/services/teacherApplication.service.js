@@ -32,12 +32,13 @@ const teacherApplicationService = async ({userId,specialization,qualification})=
         applicationSubmittedAt: new Date()
     });
 
-    if(!CreateApplication){
+    if(!application){
         throw new ApiError(500,"Application failed to submit!")
     };
 
     // push notification for application
-    await NotificationService.notifyTeacherWhenAppliedForTeacher(userId,application._id)
+    const applicationId = application._id
+    await NotificationService.notifyTeacherWhenAppliedForTeacher(userId,applicationId)
     
     // return
     return application;

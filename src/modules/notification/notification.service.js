@@ -129,7 +129,7 @@ class NotificationService {
 }
 
 // ================== NOTIFY USER WHEN APPLIED FOR TEACHER ==========================
-static async notifyTeacherWhenAppliedForTeacher (userId){
+static async notifyTeacherWhenAppliedForTeacher (userId,applicationId){
 
     // check userId is available
     if(!userId){
