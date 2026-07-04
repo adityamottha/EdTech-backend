@@ -62,7 +62,8 @@ const notificationSchema = new Schema({
             "TeacherApplication",
             "Course",
             "LiveSession",
-            "Payment"
+            "Payment",
+            "AuthUser"
         ]
     }
 

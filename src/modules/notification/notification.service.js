@@ -167,7 +167,46 @@ static async notifyTeacherWhenAppliedForTeacher (userId,applicationId){
     return notification
 }
 
+// =============NOTIFY WHEN USER APPROVED FOR TEACHER ==================
+static async teacherApprovedNotification (userId){
 
+    // check userId is available
+    if(!userId){
+        throw new ApiError(
+            400,
+            "userId is required!"
+        );
+    };
+
+    // find if teacher already have a Approved notification
+    const existingApprovedNotification = await Notification.findOne({
+        userId,
+        type:"TEACHER_APPROVED"
+    });
+
+    if(existingApprovedNotification){
+        throw new ApiError(
+            409,
+            "Already have approved notification!"
+        );
+    };
+
+    // create notification
+     const notification = await Notification.create({
+        userId,
+        title: "Welcome Aboard!",
+        message: "Congratulations! Your teacher application has been approved. Welcome to the teaching team!",
+        type:"TEACHER_APPROVED",
+        priority: "MEDIUM",
+        relatedId: userId,
+        relatedModel: "AuthUser"
+    })
+
+    // return 
+    return notification
+
+    // return
+}
 }
 
 export default NotificationService;
