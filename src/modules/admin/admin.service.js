@@ -168,7 +168,7 @@ const rejectApplicationService = async ({userId,reason})=>{
   },{new:true});
 
   // create notification
-  await NotificationService.teacherRejactedNotificationService(userId);
+  await NotificationService.teacherRejactedNotificationService(userId,reason);
 
   // return
   return updatedUser;

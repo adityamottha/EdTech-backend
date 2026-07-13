@@ -208,7 +208,7 @@ static async teacherApprovedNotificationService (userId){
 
 
 // ================= NOTIFY USER WHEN REJECTED BY TEACHER ================
-static async teacherRejactedNotificationService (userId){
+static async teacherRejactedNotificationService (userId,reason){
 
     // check userId is available
     if(!userId){
@@ -232,15 +232,15 @@ static async teacherRejactedNotificationService (userId){
          };
 
     // create notification 
-    const notification = await Notification.create({
-        userId,
-        title:"Rejected application!",
-        message:"Sorry! your application has been rejected by Admin please contact our team!.",
-        type:"TEACHER_REJECTED",
-        priority:"MEDIUM",
-        relatedId:userId,
-        relatedModel:"AuthUser"
-    });
+   const notification = await Notification.create({
+    userId,
+    title: "Application Rejected",
+    message: `We regret to inform you that your application has been declined for the following reason: ${reason}. If you have any questions, please reach out to our support team.`,
+    type: "TEACHER_REJECTED",
+    priority: "MEDIUM",
+    relatedId: userId,
+    relatedModel: "AuthUser"
+});
 
     // return 
     return notification;
