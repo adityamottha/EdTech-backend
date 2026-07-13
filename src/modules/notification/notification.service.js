@@ -206,6 +206,46 @@ static async teacherApprovedNotificationService (userId){
     return notification
 }
 
+
+// ================= NOTIFY USER WHEN REJECTED BY TEACHER ================
+static async teacherRejactedNotificationService (userId){
+
+    // check userId is available
+    if(!userId){
+        throw new ApiError(
+            200,
+            "userId is required!"
+        );
+    };
+
+    // check if notification already available find and check
+    const existedNotification = await Notification.findOne({
+            userId,
+            type:"TEACHER_REJECTED"
+         });
+
+         if(existedNotification){
+            throw new ApiError(
+                408,
+                "Notification already has been sent!"
+            );
+         };
+
+    // create notification 
+    const notification = await Notification.create({
+        userId,
+        title:"Rejected application!",
+        message:"Sorry! your application has been rejected by Admin please contact our team!.",
+        type:"TEACHER_REJECTED",
+        priority:"MEDIUM",
+        relatedId:userId,
+        relatedModel:"AuthUser"
+    });
+
+    // return 
+    return notification;
+};
+
 }
 
 export default NotificationService;
