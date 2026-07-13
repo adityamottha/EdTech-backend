@@ -167,6 +167,9 @@ const rejectApplicationService = async ({userId,reason})=>{
     rejectedReason:reason
   },{new:true});
 
+  // create notification
+  await NotificationService.teacherRejactedNotificationService(userId);
+
   // return
   return updatedUser;
 };
