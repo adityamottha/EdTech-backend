@@ -1,5 +1,6 @@
 import { LiveSession } from "./liveSession.model.js";
 import { ApiError } from "../../utils/ApiError.js"
+import NotificationService from "../notification/notification.service.js";
 
 // ================== CREATE LIVE SESSION ===============
 
@@ -48,6 +49,10 @@ export const createLiveSessionService = async (
 
     // throw if session failed to create
     if(!createSession) throw new ApiError(500,"Session failed to create!")
+
+        
+    // push notifications to students about liveSession
+    await NotificationService.liveSessionCreateNotificationService({courseId,title,liveSessionId:createSession._id})
 
     // return 
     return createSession;

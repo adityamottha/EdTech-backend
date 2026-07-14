@@ -10,7 +10,7 @@ notification service >>>
 3) notify when user apply for teacher ok
 4) notify when user approved for teacher ok
 5) notify when user  application rejected for teacher + with reason ok
-6) notify students when teacher create live sessions
+6) notify students when teacher create live sessions ok
 7) notify students when teacher started live session
 8) notify students when teacher completed live session
 9) notify students when teacher cancelled the live session
@@ -248,7 +248,7 @@ static async teacherRejactedNotificationService (userId,reason){
 };
 
 // =============== NOTIFY STUDENT WHEN TEACHER CREATE LIVE-SESSION 
-static async liveSessionCreateNotificationService (courseId,title,liveSessionId){
+static async liveSessionCreateNotificationService ({courseId,title,liveSessionId}){
     //check courseId is available
     if(!courseId){
         throw new ApiError(
