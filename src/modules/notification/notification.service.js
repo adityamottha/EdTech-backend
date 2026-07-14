@@ -2,13 +2,14 @@ import { Notification } from "./notification.model.js";
 import { ApiError } from "../../utils/ApiError.js";
 import { Course } from "../../modules/courses/models/course.model.js"
 import { TeacherApplication } from "../teacher/models/teacherApplication.model.js";
+import { Enrollment } from "../enrollment/enrollment.model.js";
 
 /* 
 notification service >>>
-2) notify on course enrollment
-3) notify when user apply for teacher
-4) notify when user approved for teacher
-5) notify when user  application rejected for teacher + with reason
+2) notify on course enrollment ok
+3) notify when user apply for teacher ok
+4) notify when user approved for teacher ok
+5) notify when user  application rejected for teacher + with reason ok
 6) notify students when teacher create live sessions
 7) notify students when teacher started live session
 8) notify students when teacher completed live session
@@ -245,6 +246,61 @@ static async teacherRejactedNotificationService (userId,reason){
     // return 
     return notification;
 };
+
+// =============== NOTIFY STUDENT WHEN TEACHER CREATE LIVE-SESSION 
+static async liveSessionCreateNotificationService (courseId,title,liveSessionId){
+    //check courseId is available
+    if(!courseId){
+        throw new ApiError(
+            400,
+            "CourseId is required"
+        );
+    };
+
+    // check live sessionId is required
+    if(!liveSessionId){
+        throw new ApiError(
+            400,
+            "liveSessionId is required"
+        );
+    };
+
+    // check title is available
+    if(!title){
+        throw new ApiError(
+            400,
+            "Title is required!"
+        );
+    };
+
+    // find enrolled student with courseId
+    const enrolledStudents = await Enrollment.find({courseId}).select("studentId");
+
+    if(enrolledStudents.length === 0 ){
+        throw new ApiError(
+            404,
+            "No students are enrolled in this course."
+        );
+    };
+
+    // map on students
+    const notification = enrolledStudents.map((student) =>({
+        userId: student.studentId,
+        title: `New Live Session ${title}`,
+        message: `Your teacher has scheduled "${title}". Join on time!`,
+        type: "LIVE_SESSION_CREATED",
+        priority: "HIGH",
+        relatedId: liveSessionId,
+        relatedModel: "LiveSession",
+    }));
+
+    // send notification by insertMany
+    const createNotification = await Notification.insertMany(notification);
+
+    // return
+    return createNotification;
+
+}
 
 }
 
