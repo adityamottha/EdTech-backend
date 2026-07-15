@@ -11,7 +11,7 @@ notification service >>>
 4) notify when user approved for teacher ok
 5) notify when user  application rejected for teacher + with reason ok
 6) notify students when teacher create live sessions ok
-7) notify students when teacher started live session
+7) notify students when teacher started live session ok
 8) notify students when teacher completed live session
 9) notify students when teacher cancelled the live session
 10) notify when payment success
@@ -340,6 +340,48 @@ static async startLiveSessionNotificationService ({courseId,title,liveSessionId,
     /// return the doc
     return notification;
 
+}
+
+// ============ NOTIFY STUDENT WHEN LIVE SESSION COMPLETED ================
+static async endLiveSessionNotificationService ({courseId,title,liveSessionId}){
+
+    // check all data is required
+    if(!courseId || !title || !liveSessionId){
+        throw new ApiError(
+            400,
+            "courseId title liveSessionId are required!"
+        );
+
+    };
+
+    // find enrolled student from Enrollment schema with studentId
+    const enrolledStudents = await Enrollment.find({courseId}).select("studentId");
+
+    // check if empty -> throw error
+    if(enrolledStudents.length === 0){
+        throw new ApiError(
+            404,
+            "No enrolled Students found!"
+        );
+    };
+
+    //map over enrolled students and create notification
+    const enrollment = enrolledStudents.map((student)=>({
+        userId: student.studentId,
+        title: `Live Session Ended`,
+        message: `Your teacher has Ended the live session : ${title}`,
+        type: "LIVE_SESSION_COMPLETED",
+        priority: "HIGH",
+        relatedId: liveSessionId,
+        relatedModel: "LiveSession",
+    }));
+
+    // insertMany the Notifications
+    const notification = await Notification.insertMany(enrollment);
+
+    // return
+    return notification;
+    
 }
 
 }
