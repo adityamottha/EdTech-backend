@@ -300,6 +300,47 @@ static async liveSessionCreateNotificationService ({courseId,title,liveSessionId
     // return
     return createNotification;
 
+};
+
+// ================== NOTIFY STUDENTS WHEN TEACHER STARTS LIVES SESSION =================
+static async startLiveSessionNotificationService ({courseId,title,liveSessionId,meetingLink}){
+    // check data is required
+    if(!courseId || !title || !liveSessionId || !meetingLink ){
+        throw new ApiError(
+            400,
+            "All fields are required!"
+        );
+    };
+
+    // find enrolled students by courseId and get studentId
+    const enrollemetStudents = await Enrollment.find({courseId}).select("studentId");
+
+    // check if course enrollment is 0 -> through error
+    if(enrollemetStudents.length === 0){
+        throw new ApiError(
+            404,
+            "No enrolled students found!"
+        );
+    };
+
+    // map over the enrollment get each student and create notification
+    const enrollment = enrollemetStudents.map((student)=>({
+        userId:student.studentId,
+        title: `Session started ${title}`,
+        message: `Your teacher started Please click and join: ${meetingLink}`,
+        type: "LIVE_SESSION_STARTED",
+        priority: "HIGH",
+        relatedId: liveSessionId,
+        relatedModel: "LiveSession",
+
+    }));
+
+    // insertMany for notification
+    const notification = await Notification.insertMany(enrollment);
+
+    /// return the doc
+    return notification;
+
 }
 
 }
