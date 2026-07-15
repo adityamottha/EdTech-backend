@@ -378,10 +378,10 @@ static async endLiveSessionNotificationService ({courseId,title,liveSessionId}){
 
     // insertMany the Notifications
     const notification = await Notification.insertMany(enrollment);
-
+    
     // return
     return notification;
-    
+
 }
 
 }

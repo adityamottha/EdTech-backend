@@ -259,6 +259,13 @@ export const completeLiveSessionService = async (sessionId) =>{
         );
     };
 
+    // Push notification
+    await NotificationService.endLiveSessionNotificationService({
+        courseId:session.courseId,
+        title:session.title,
+        liveSessionId:sessionId
+    });
+
     // return
     return session;
 }
