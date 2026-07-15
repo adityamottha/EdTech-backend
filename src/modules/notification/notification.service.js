@@ -325,14 +325,13 @@ static async startLiveSessionNotificationService ({courseId,title,liveSessionId,
 
     // map over the enrollment get each student and create notification
     const enrollment = enrollemetStudents.map((student)=>({
-        userId:student.studentId,
-        title: `Session started ${title}`,
-        message: `Your teacher started Please click and join: ${meetingLink}`,
+        userId: student.studentId,
+        title: `Live Session Started: ${title}`,
+        message: `Your teacher has started the live session. Click the link below to join: ${meetingLink}`,
         type: "LIVE_SESSION_STARTED",
         priority: "HIGH",
         relatedId: liveSessionId,
         relatedModel: "LiveSession",
-
     }));
 
     // insertMany for notification

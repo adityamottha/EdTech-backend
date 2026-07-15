@@ -176,6 +176,14 @@ export const startLiveSessionService = async (sessionId) =>{
         );
     };
 
+    // push notification
+    await NotificationService.startLiveSessionNotificationService({
+        courseId:session.courseId,
+        title:session.title,
+        liveSessionId:sessionId,
+        meetingLink:session.meetingLink
+    });
+
     // return
     return session
 
