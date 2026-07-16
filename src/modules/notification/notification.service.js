@@ -12,7 +12,7 @@ notification service >>>
 5) notify when user  application rejected for teacher + with reason ok
 6) notify students when teacher create live sessions ok
 7) notify students when teacher started live session ok
-8) notify students when teacher completed live session
+8) notify students when teacher completed live session ok
 9) notify students when teacher cancelled the live session
 10) notify when payment success
 11) notify when payment failed
@@ -382,7 +382,47 @@ static async endLiveSessionNotificationService ({courseId,title,liveSessionId}){
     // return
     return notification;
 
-}
+};
+
+// ================== CANCELLED LIVE SESSION NOTIFICATION ===============
+static async cancelLiveSessionNotificationService ({courseId,liveSessionId}){
+
+    // check all fields are required
+    if(!courseId || !sessionId || !userId ){
+        throw new ApiError(
+            400,
+            "courseId sessionId required !"
+        )
+    };
+    //   find students who enrolled the course
+    const enrollments = await Enrollment.find({courseId}).select("studentId");
+
+    // check if zero student throw error
+    if(enrollments.length === 0){
+        throw new ApiError(
+            404,
+            "No enrolled students found!"
+        );
+    };
+
+    // create notification map over enrolled student
+    const enrolledStudents = enrollments.map((student)=>({
+        userId: student.studentId,
+        title: `Live Session Cancelled`,
+        message: `Your teacher has Cancelled the live session : ${title}`,
+        type: "LIVE_SESSION_CANCELLED",
+        priority: "HIGH",
+        relatedId: liveSessionId,
+        relatedModel: "LiveSession",
+    }));
+
+    // inertMany the students
+    const notification = await Notification.insertMany(enrolledStudents);
+
+    // return
+    return notification;
+};
+
 
 }
 
