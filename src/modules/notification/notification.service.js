@@ -13,7 +13,7 @@ notification service >>>
 6) notify students when teacher create live sessions ok
 7) notify students when teacher started live session ok
 8) notify students when teacher completed live session ok
-9) notify students when teacher cancelled the live session
+9) notify students when teacher cancelled the live session ok
 10) notify when payment success
 11) notify when payment failed
  */
@@ -385,15 +385,15 @@ static async endLiveSessionNotificationService ({courseId,title,liveSessionId}){
 };
 
 // ================== CANCELLED LIVE SESSION NOTIFICATION ===============
-static async cancelLiveSessionNotificationService ({courseId,liveSessionId}){
+static async cancelLiveSessionNotificationService ({courseId,liveSessionId, title}){
 
     // check all fields are required
-    if(!courseId || !sessionId || !userId ){
-        throw new ApiError(
-            400,
-            "courseId sessionId required !"
-        )
-    };
+    if (!courseId || !liveSessionId || !title) {
+    throw new ApiError(
+        400,
+        "courseId, liveSessionId, and title are required!"
+    );
+}
     //   find students who enrolled the course
     const enrollments = await Enrollment.find({courseId}).select("studentId");
 

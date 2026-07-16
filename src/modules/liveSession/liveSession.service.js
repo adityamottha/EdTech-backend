@@ -224,7 +224,8 @@ export const cancelLiveSessionService = async (sessionId) =>{
     // push notification
     await NotificationService.cancelLiveSessionNotificationService({
         courseId:session.courseId,
-        liveSessionId:sessionId
+        liveSessionId:sessionId,
+        title:session.title
      })
 
     // return 
